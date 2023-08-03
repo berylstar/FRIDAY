@@ -5,46 +5,43 @@ using UnityEngine.UI;
 
 public enum CardType
 {
-    CLEAR,
+    BATTLE,
     THREAT,
 }
 
 public class CardScript : MonoBehaviour
 {
-    [Header("Infomation")]
     public CardType cardType;
-    public int iBattle;
-    public int iRemove;
-    
-    public int iDraw;
-    public int iLevel1;
-    public int iLevel2;
-    public int iLevel3;
-    public string sName;
-    public string sEffect;
 
-    [Header("UI")]
-    public Text textBattle;
-    public Text textRemove;
-    public Text textDraw;
-    public Text textLevel1;
-    public Text textLevel2;
-    public Text textLevel3;
-    public Text textName;
-    public Text textEffect;
+    [Header("THREAT")]
+    public GameObject objectThreat;
+    public int draw;
+    public int level1;
+    public int level2;
+    public int level3;
+    private bool isFlipped = false;
 
-    public GameObject threat;
-    public GameObject clear;
+    [Header("BATTLE")]
+    public GameObject objectBattle;
+    public int remove;
+    public int battle;
+
+    private Animator ani;
 
     private void Start()
     {
-        textBattle.text = iBattle.ToString();
-        textRemove.text = iRemove.ToString();
-        textDraw.text = iDraw.ToString();
-        textLevel1.text = iLevel1.ToString();
-        textLevel2.text = iLevel2.ToString();
-        textLevel3.text = iLevel3.ToString();
-        textName.text = sName;
-        textEffect.text = sEffect;
+        ani = GetComponent<Animator>();
+    }
+
+    public void ShowFlip()
+    {
+        ani.SetTrigger("Flip");
+
+        if (cardType == CardType.THREAT)
+        {
+            isFlipped = !isFlipped;
+            objectBattle.SetActive(isFlipped);
+            objectThreat.SetActive(!isFlipped);
+        }
     }
 }
