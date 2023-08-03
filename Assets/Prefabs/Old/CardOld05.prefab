@@ -719,7 +719,7 @@ GameObject:
   - component: {fileID: 1010270820778473895}
   - component: {fileID: 1010270820778473894}
   m_Layer: 5
-  m_Name: Card
+  m_Name: CardOld05
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -770,13 +770,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2490b580308105947991f9db2d4d6904, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  iBattle: -1
-  iRemove: 1
+  iBattle: -2
+  iRemove: 2
   iDraw: 0
   iLevel1: 0
   iLevel2: 0
   iLevel3: 0
-  sName: "\uC0B0\uB9CC\uD568"
+  sName: "\uC5B4\uB9AC\uC11D\uC74C"
   sEffect: ...
   textBattle: {fileID: 1010270820566504743}
   textRemove: {fileID: 1010270819220455511}
@@ -879,7 +879,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &3964046574549814597
 Transform:
   m_ObjectHideFlags: 0
@@ -910,7 +910,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &7011442652269991346
 Transform:
   m_ObjectHideFlags: 0

@@ -3,11 +3,19 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+public enum CardType
+{
+    CLEAR,
+    THREAT,
+}
+
 public class CardScript : MonoBehaviour
 {
     [Header("Infomation")]
+    public CardType cardType;
     public int iBattle;
     public int iRemove;
+    
     public int iDraw;
     public int iLevel1;
     public int iLevel2;
@@ -24,6 +32,9 @@ public class CardScript : MonoBehaviour
     public Text textLevel3;
     public Text textName;
     public Text textEffect;
+
+    public GameObject threat;
+    public GameObject clear;
 
     private void Start()
     {

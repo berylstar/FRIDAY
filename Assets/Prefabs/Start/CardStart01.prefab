@@ -719,7 +719,7 @@ GameObject:
   - component: {fileID: 1010270820778473895}
   - component: {fileID: 1010270820778473894}
   m_Layer: 5
-  m_Name: Card
+  m_Name: CardStart01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -879,7 +879,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &3964046574549814597
 Transform:
   m_ObjectHideFlags: 0
@@ -910,7 +910,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &7011442652269991346
 Transform:
   m_ObjectHideFlags: 0
