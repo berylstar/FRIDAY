@@ -9,8 +9,13 @@ public class GameController : MonoBehaviour
     public int level = 0;
     public int life = 20;
 
-    public List<GameObject> deck = new List<GameObject>();
-    public GameObject onField;
+    public GameObject battlesBox;
+    public GameObject threatsBox;
+
+    [Header("CARD")]
+    public List<GameObject> deckList = new List<GameObject>();
+    public List<GameObject> threatList = new List<GameObject>();
+    public List<GameObject> oldList = new List<GameObject>();
 
     private int indexDrawCard = 0;
 
@@ -24,31 +29,31 @@ public class GameController : MonoBehaviour
         int random1, random2;
         GameObject temp;
 
-        for (int i = 0; i < deck.Count; i++)
+        for (int i = 0; i < deckList.Count; i++)
         {
-            random1 = Random.Range(0, deck.Count);
-            random2 = Random.Range(0, deck.Count);
+            random1 = Random.Range(0, deckList.Count);
+            random2 = Random.Range(0, deckList.Count);
 
-            temp = deck[random1];
-            deck[random1] = deck[random2];
-            deck[random2] = temp;
+            temp = deckList[random1];
+            deckList[random1] = deckList[random2];
+            deckList[random2] = temp;
         }
     }
 
     public void DrawCardFromDeck()
     {
-        GameObject inst = Instantiate(deck[indexDrawCard]) as GameObject;
-        inst.transform.SetParent(onField.transform);
+        GameObject inst = Instantiate(deckList[indexDrawCard], new Vector3(0, -50 * indexDrawCard, 1), Quaternion.identity) as GameObject;
+        inst.transform.SetParent(battlesBox.transform);
         inst.transform.localScale = new Vector3(1, 1, 1);
 
         indexDrawCard += 1;
     }
 
-    public void ClearOnCard()
+    public void ClearBattles()
     {
-        for (int i = 0; i < onField.transform.childCount; i++)
+        for (int i = 0; i < battlesBox.transform.childCount; i++)
         {
-            Destroy(onField.transform.GetChild(i).gameObject);
+            Destroy(battlesBox.transform.GetChild(i).gameObject);
         }
 
         indexDrawCard = 0;
