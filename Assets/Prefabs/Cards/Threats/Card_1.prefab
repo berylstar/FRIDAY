@@ -612,7 +612,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &6510709000526290008
 RectTransform:
   m_ObjectHideFlags: 0
@@ -892,7 +892,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &6510709001170723477
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1166,10 +1166,10 @@ GameObject:
   - component: {fileID: 6510709001287931811}
   - component: {fileID: 6510709001287931812}
   - component: {fileID: 6510709001287931813}
-  - component: {fileID: 6510709001287931815}
   - component: {fileID: 6510709001287931814}
+  - component: {fileID: 6510709001287931815}
   m_Layer: 5
-  m_Name: Card (1)
+  m_Name: Card_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1283,30 +1283,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
---- !u!114 &6510709001287931815
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6510709001287931833}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2490b580308105947991f9db2d4d6904, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  cardType: 1
-  objectThreat: {fileID: 6510709000526290011}
-  draw: 2
-  level1: 1
-  level2: 3
-  level3: 6
-  objectBattle: {fileID: 6510709001170723432}
-  buttonEffect: {fileID: 6510708999706168388}
-  buttonRemove: {fileID: 6510709000879758917}
-  buttonPick: {fileID: 6510709001230763437}
-  remove: 1
-  battle: 1
 --- !u!114 &6510709001287931814
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1336,6 +1312,31 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
+--- !u!114 &6510709001287931815
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6510709001287931833}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2490b580308105947991f9db2d4d6904, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cardType: 0
+  serialNumber: 1
+  objectThreat: {fileID: 6510709000526290011}
+  draw: 2
+  level1: 1
+  level2: 3
+  level3: 6
+  objectBattle: {fileID: 6510709001170723432}
+  buttonEffect: {fileID: 6510708999706168388}
+  buttonRemove: {fileID: 6510709000879758917}
+  buttonPick: {fileID: 6510709001230763437}
+  remove: 1
+  battle: 1
 --- !u!1 &6510709001360238460
 GameObject:
   m_ObjectHideFlags: 0

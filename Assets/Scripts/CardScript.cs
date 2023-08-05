@@ -12,6 +12,7 @@ public enum CardType
 public class CardScript : MonoBehaviour
 {
     public CardType cardType;
+    public int serialNumber;
 
     [Header("THREAT")]
     public GameObject objectThreat;
@@ -75,11 +76,24 @@ public class CardScript : MonoBehaviour
     {
         if (cardType == CardType.THREAT)
         {
-            cardType = CardType.BATTLE;
-            objectThreat.SetActive(false);
-            objectBattle.SetActive(true);
-            isClicked = false;
-            GameController.I.battleDeckList.Add(this.gameObject);
+            ChangeBattleMode();
+            GameController.I.ResolveThreat(serialNumber);
         }
+    }
+
+    public void ChangeThreatMode()
+    {
+        cardType = CardType.THREAT;
+        objectThreat.SetActive(true);
+        objectBattle.SetActive(false);
+        isClicked = false;
+    }
+
+    public void ChangeBattleMode()
+    {
+        cardType = CardType.BATTLE;
+        objectThreat.SetActive(false);
+        objectBattle.SetActive(true);
+        isClicked = false;
     }
 }

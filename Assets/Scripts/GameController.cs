@@ -21,12 +21,19 @@ public class GameController : MonoBehaviour
 
     public List<GameObject> oldList = new List<GameObject>();
 
-    private int idxBattle = 0;
-    private int idxThreat = 0;
+    public List<GameObject> allCards = new List<GameObject>();
 
     private void Awake()
     {
         I = this;
+    }
+
+    private void Start()
+    {
+        foreach (GameObject card in allCards)
+        {
+            card.GetComponent<CardScript>().ChangeThreatMode();
+        }
     }
 
     private void ShuffleCardList(List<GameObject> list)
@@ -66,35 +73,58 @@ public class GameController : MonoBehaviour
 
     public void DrawCardFromDeck()
     {
-        DrawCard(battleDeckList[idxBattle], battleField.transform, new Vector2(500, 550 - 20 * idxBattle), CardType.BATTLE);
-
-        idxBattle += 1;
+        if (battleDeckList.Count > 0)
+            DrawCard(battleDeckList[0], battleField.transform, new Vector2(500, 550), CardType.BATTLE);
     }
 
     public void SetThreats()
     {
-        DrawCard(threatDeckList[idxThreat], threatField.transform, new Vector2(150, 500), CardType.THREAT);
-        DrawCard(threatDeckList[idxThreat+1], threatField.transform, new Vector2(150, 300), CardType.THREAT);
+        if (threatDeckList.Count > 0)
+            DrawCard(threatDeckList[0], threatField.transform, new Vector2(150, 500), CardType.THREAT);
 
-        idxThreat += 2;
+        if (threatDeckList.Count > 0)
+            DrawCard(threatDeckList[0], threatField.transform, new Vector2(150, 300), CardType.THREAT);
+    }
+
+    public void ResolveThreat(int serialNumber)
+    {
+        GameObject rc = allCards[serialNumber];
+        rc.GetComponent<CardScript>().ChangeBattleMode();
+        battleDeckList.Add(rc);
+
+        threatFieldList.Remove(allCards[serialNumber]);
     }
 
     public void ClearField()
     {
-        for (int i = 0; i < battleField.transform.childCount; i++)
+        while (battleFieldList.Count > 0)
         {
-            Destroy(battleField.transform.GetChild(i).gameObject);
+            GameObject card = battleFieldList[0];
+            battleFieldList.Remove(card);
+            battleDeckList.Add(card);
         }
 
-        idxBattle = 0;
+        foreach (Transform child in battleField.transform)
+        {
+            Destroy(child.gameObject);
+        }
+
         ShuffleCardList(battleDeckList);
+        
+        //////////
 
-        for (int i = 0; i < threatField.transform.childCount; i++)
+        while (threatFieldList.Count > 0)
         {
-            Destroy(threatField.transform.GetChild(i).gameObject);
+            GameObject card = threatFieldList[0];
+            threatFieldList.Remove(card);
+            threatDeckList.Add(card);
         }
 
-        idxThreat = 0;
+        foreach (Transform child in threatField.transform)
+        {
+            Destroy(child.gameObject);
+        }
+
         ShuffleCardList(threatDeckList);
     }
 }
