@@ -44,27 +44,22 @@ public class GameController : MonoBehaviour
     public void DrawCard(GameObject go, Transform parent, Vector2 pos)
     {
         GameObject inst = Instantiate(go) as GameObject;
-        inst.transform.SetParent(parent);
+        inst.transform.SetParent(parent, false);
         inst.GetComponent<RectTransform>().anchoredPosition = pos;
         inst.transform.localScale = new Vector3(1, 1, 1);
     }
 
     public void DrawCardFromDeck()
     {
-        //GameObject inst = Instantiate(deckList[indexDrawCard]) as GameObject;
-        //inst.transform.SetParent(battlesBox.transform);
-        //inst.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, -50 * indexDrawCard);
-        //inst.transform.localScale = new Vector3(1, 1, 1);
-
-        DrawCard(deckList[idxDeck], battleField.transform, new Vector2(0, -50 * idxDeck));
+        DrawCard(deckList[idxDeck], battleField.transform, new Vector2(500, 550 - 20 * idxDeck));
 
         idxDeck += 1;
     }
 
     public void SetThreats()
     {
-        DrawCard(threatList[idxThreat], threatField.transform, new Vector2(-300, 100));
-        DrawCard(threatList[idxThreat+1], threatField.transform, new Vector2(-300, -100));
+        DrawCard(threatList[idxThreat], threatField.transform, new Vector2(150, 500));
+        DrawCard(threatList[idxThreat+1], threatField.transform, new Vector2(150, 300));
 
         idxThreat += 2;
     }

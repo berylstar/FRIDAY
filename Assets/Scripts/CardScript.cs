@@ -29,11 +29,13 @@ public class CardScript : MonoBehaviour
     public int battle;
 
     private Animator ani;
+    private RectTransform rt;
     private bool isClicked = false;
 
     private void Start()
     {
         ani = GetComponent<Animator>();
+        rt = GetComponent<RectTransform>();
     }
 
     public void ClickCard()
@@ -59,8 +61,12 @@ public class CardScript : MonoBehaviour
     {
         if (cardType == CardType.BATTLE)
         {
-            transform.Translate(Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position);
-            transform.position = new Vector3(transform.position.x, transform.position.y, -1);
+            Vector3 pos = Input.mousePosition;
+
+            if (pos.x < 120 || pos.x > 904 || pos.y < 70 || pos.y > 550)
+                return;
+
+            rt.anchoredPosition = pos;
         }        
     }
 
