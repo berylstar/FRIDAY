@@ -13,11 +13,15 @@ public class GameController : MonoBehaviour
     public GameObject threatField;
 
     [Header("CARD")]
-    public List<GameObject> deckList = new List<GameObject>();
-    public List<GameObject> threatList = new List<GameObject>();
+    public List<GameObject> battleFieldList = new List<GameObject>();
+    public List<GameObject> threatFieldList = new List<GameObject>();
+
+    public List<GameObject> battleDeckList = new List<GameObject>();
+    public List<GameObject> threatDeckList = new List<GameObject>();
+
     public List<GameObject> oldList = new List<GameObject>();
 
-    private int idxDeck = 0;
+    private int idxBattle = 0;
     private int idxThreat = 0;
 
     private void Awake()
@@ -30,36 +34,47 @@ public class GameController : MonoBehaviour
         int random1, random2;
         GameObject temp;
 
-        for (int i = 0; i < deckList.Count; i++)
+        for (int i = 0; i < list.Count; i++)
         {
-            random1 = Random.Range(0, deckList.Count);
-            random2 = Random.Range(0, deckList.Count);
+            random1 = Random.Range(0, list.Count);
+            random2 = Random.Range(0, list.Count);
 
-            temp = deckList[random1];
+            temp = list[random1];
             list[random1] = list[random2];
             list[random2] = temp;
         }
     }
 
-    public void DrawCard(GameObject go, Transform parent, Vector2 pos)
+    public void DrawCard(GameObject card, Transform parent, Vector2 pos, CardType type)
     {
-        GameObject inst = Instantiate(go) as GameObject;
+        GameObject inst = Instantiate(card) as GameObject;
         inst.transform.SetParent(parent, false);
         inst.GetComponent<RectTransform>().anchoredPosition = pos;
         inst.transform.localScale = new Vector3(1, 1, 1);
+
+        if (type == CardType.BATTLE)
+        {
+            battleFieldList.Add(card);
+            battleDeckList.Remove(card);
+        }
+        else
+        {
+            threatFieldList.Add(card);
+            threatDeckList.Remove(card);
+        }
     }
 
     public void DrawCardFromDeck()
     {
-        DrawCard(deckList[idxDeck], battleField.transform, new Vector2(500, 550 - 20 * idxDeck));
+        DrawCard(battleDeckList[idxBattle], battleField.transform, new Vector2(500, 550 - 20 * idxBattle), CardType.BATTLE);
 
-        idxDeck += 1;
+        idxBattle += 1;
     }
 
     public void SetThreats()
     {
-        DrawCard(threatList[idxThreat], threatField.transform, new Vector2(150, 500));
-        DrawCard(threatList[idxThreat+1], threatField.transform, new Vector2(150, 300));
+        DrawCard(threatDeckList[idxThreat], threatField.transform, new Vector2(150, 500), CardType.THREAT);
+        DrawCard(threatDeckList[idxThreat+1], threatField.transform, new Vector2(150, 300), CardType.THREAT);
 
         idxThreat += 2;
     }
@@ -71,8 +86,8 @@ public class GameController : MonoBehaviour
             Destroy(battleField.transform.GetChild(i).gameObject);
         }
 
-        idxDeck = 0;
-        ShuffleCardList(deckList);
+        idxBattle = 0;
+        ShuffleCardList(battleDeckList);
 
         for (int i = 0; i < threatField.transform.childCount; i++)
         {
@@ -80,11 +95,6 @@ public class GameController : MonoBehaviour
         }
 
         idxThreat = 0;
-        ShuffleCardList(threatList);
-    }
-
-    public void TEST()
-    {
-        ShuffleCardList(deckList);
+        ShuffleCardList(threatDeckList);
     }
 }

@@ -79,7 +79,7 @@ public class CardScript : MonoBehaviour
             objectThreat.SetActive(false);
             objectBattle.SetActive(true);
             isClicked = false;
-            GameController.I.deckList.Add(this.gameObject);
+            GameController.I.battleDeckList.Add(this.gameObject);
         }
     }
 }

@@ -26,7 +26,7 @@ public class UIController : MonoBehaviour
     {
         imgLevel.sprite = spriteLevel[GameController.I.level];
         textLife.text = "x" + GameController.I.life;
-        textDeck.text = "x" + GameController.I.deckList.Count;
+        textDeck.text = "x" + GameController.I.battleDeckList.Count;
     }
 
     public void ButtonPirate()
