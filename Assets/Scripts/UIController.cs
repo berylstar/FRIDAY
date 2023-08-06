@@ -13,6 +13,9 @@ public class UIController : MonoBehaviour
     public Text textDeck;
     public GameObject panelPirtate;
     private bool activePirate = false;
+    public Button buttonThreat;
+    public GameObject buttonPickup;
+    public GameObject buttonPickdown;
 
     [Header("Source")]
     public Sprite[] spriteLevel;
