@@ -17,9 +17,7 @@ public class CardScript : MonoBehaviour
     [Header("THREAT")]
     public GameObject objectThreat;
     public int draw;
-    public int level1;
-    public int level2;
-    public int level3;
+    public List<int> level = new List<int>() { 0, 0, 0 };
 
     [Header("BATTLE")]
     public GameObject objectBattle;
@@ -71,29 +69,25 @@ public class CardScript : MonoBehaviour
         }        
     }
 
-    // À§Çù ÇØ°áÇÏ°í µ¦¿¡ ³Ö±â
-    public void Resolve()
-    {
-        if (cardType == CardType.THREAT)
-        {
-            ChangeBattleMode();
-            GameController.I.ResolveThreat(serialNumber);
-        }
-    }
-
     public void ChangeThreatMode()
     {
-        cardType = CardType.THREAT;
-        objectThreat.SetActive(true);
-        objectBattle.SetActive(false);
-        isClicked = false;
+        if (cardType == CardType.BATTLE)
+        {
+            cardType = CardType.THREAT;
+            objectThreat.SetActive(true);
+            objectBattle.SetActive(false);
+            isClicked = false;
+        }
     }
 
     public void ChangeBattleMode()
     {
-        cardType = CardType.BATTLE;
-        objectThreat.SetActive(false);
-        objectBattle.SetActive(true);
-        isClicked = false;
+        if (cardType == CardType.THREAT)
+        {
+            cardType = CardType.BATTLE;
+            objectThreat.SetActive(false);
+            objectBattle.SetActive(true);
+            isClicked = false;
+        }
     }
 }

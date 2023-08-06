@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameController : MonoBehaviour
 {
@@ -12,10 +13,15 @@ public class GameController : MonoBehaviour
     public GameObject battleField;
     public GameObject threatField;
 
+    public CardScript nowThreat = null;
+    public int nowDraw;
+    public int nowBattle;
+
     [Header("CARD")]
     public List<GameObject> battleDeckList = new List<GameObject>();
     public List<GameObject> battleFieldList = new List<GameObject>();
     public List<GameObject> battlePassedList = new List<GameObject>();
+    public List<GameObject> battleRemovedList = new List<GameObject>();
 
     public List<GameObject> threatDeckList = new List<GameObject>();
     public List<GameObject> threatFieldList = new List<GameObject>();
@@ -54,6 +60,31 @@ public class GameController : MonoBehaviour
         }
     }
 
+    private void ResetDeck(CardType type)
+    {
+        if (type == CardType.THREAT)
+        {
+            foreach (GameObject card in threatPassedList)
+            {
+                threatDeckList.Add(card);
+                threatPassedList.Remove(card);
+            }
+        }
+        else if (type == CardType.BATTLE)
+        {
+            foreach (GameObject card in threatPassedList)
+            {
+                battleDeckList.Add(card);
+                battlePassedList.Remove(card);
+            }
+        }
+    }
+
+    public void TEST()
+    {
+        ResetDeck(CardType.BATTLE);
+    }
+
     public void DrawCard(GameObject card, Transform parent, Vector2 pos, CardType type)
     {
         GameObject inst = Instantiate(card) as GameObject;
@@ -73,20 +104,32 @@ public class GameController : MonoBehaviour
         }
     }
 
-    public void DrawCardFromDeck()
+    public void DrawBattleCard()
     {
         if (battleDeckList.Count > 0)
-            DrawCard(battleDeckList[0], battleField.transform, new Vector2(500, 550), CardType.BATTLE);
+        {
+            if (nowDraw <= 0)
+                life -= 1;
+
+            nowBattle += battleDeckList[0].GetComponent<CardScript>().battle;
+
+            UIController.I.buttonResolve.GetComponent<Button>().interactable = (nowBattle >= nowThreat.level[level]);
+
+            nowDraw -= 1;
+
+            DrawCard(battleDeckList[0], battleField.transform, new Vector2(500, 500), CardType.BATTLE);
+        }
     }
 
-    public void SetThreats()
+    public void DrawTwoThreats()
     {
         if (threatDeckList.Count > 0)
         {
             DrawCard(threatDeckList[0], threatField.transform, new Vector2(150, 450), CardType.THREAT);
             UIController.I.buttonPickup.SetActive(true);
+            UIController.I.buttonPickdown.SetActive(true);
 
-            UIController.I.buttonThreat.interactable = false;
+            UIController.I.buttonDrawThreat.interactable = false;
         }
         else
         {
@@ -98,9 +141,7 @@ public class GameController : MonoBehaviour
         if (threatDeckList.Count > 0)
         {
             DrawCard(threatDeckList[0], threatField.transform, new Vector2(150, 150), CardType.THREAT);
-            UIController.I.buttonPickdown.SetActive(true);
         }
-            
     }
 
     public void PickThreat(int i)
@@ -115,25 +156,47 @@ public class GameController : MonoBehaviour
         }
 
         threatField.transform.GetChild(i).GetComponent<RectTransform>().anchoredPosition = new Vector2(150, 400);
+        nowThreat = threatField.transform.GetChild(i).GetComponent<CardScript>();
+        nowDraw = nowThreat.draw;
 
         if (i == 1 || (i == 0 && threatFieldList.Count == 2))
         {
             int ri = i == 0 ? 1 : 0;
             int sn = threatField.transform.GetChild(ri).GetComponent<CardScript>().serialNumber;
 
-            threatDeckList.Add(allCards[sn]);
+            threatPassedList.Add(allCards[sn]);
             threatFieldList.Remove(allCards[sn]);
             Destroy(threatField.transform.GetChild(ri).gameObject);
         }
+
+        UIController.I.buttonDrawBattle.interactable = true;
+        UIController.I.textNowBattle.gameObject.SetActive(true);
+        UIController.I.buttonResolve.SetActive(true);
+        UIController.I.buttonGiveup.SetActive(true);
     }
 
-    public void ResolveThreat(int serialNumber)
+    public void ResolveThreat()
     {
-        GameObject rc = allCards[serialNumber];
+        if (nowThreat == null)
+            return;
+
+        GameObject rc = allCards[nowThreat.serialNumber];
         rc.GetComponent<CardScript>().ChangeBattleMode();
         battleDeckList.Add(rc);
 
-        threatFieldList.Remove(allCards[serialNumber]);
+        threatFieldList.Remove(allCards[nowThreat.serialNumber]);
+
+        ClearField();
+    }
+
+    public void GiveupThreat()
+    {
+        if (nowThreat == null)
+            return;
+
+        life -= (nowThreat.level[level] - nowBattle);
+
+        ClearField();
     }
 
     public void ClearField()
@@ -144,7 +207,7 @@ public class GameController : MonoBehaviour
         {
             card = battleFieldList[0];
             battleFieldList.Remove(card);
-            battleDeckList.Add(card);
+            battlePassedList.Add(card);
         }
 
         foreach (Transform child in battleField.transform)
@@ -160,7 +223,7 @@ public class GameController : MonoBehaviour
         {
             card = threatFieldList[0];
             threatFieldList.Remove(card);
-            threatDeckList.Add(card);
+            threatPassedList.Add(card);
         }
 
         foreach (Transform child in threatField.transform)
@@ -170,6 +233,11 @@ public class GameController : MonoBehaviour
 
         ShuffleCardList(threatDeckList);
 
-        UIController.I.buttonThreat.interactable = true;
+        nowThreat = null;
+        UIController.I.buttonDrawThreat.interactable = true;
+        UIController.I.buttonDrawBattle.interactable = false;
+        UIController.I.textNowBattle.gameObject.SetActive(false);
+        UIController.I.buttonResolve.SetActive(false);
+        UIController.I.buttonGiveup.SetActive(false);
     }
 }
