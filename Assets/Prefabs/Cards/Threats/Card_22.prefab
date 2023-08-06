@@ -78,7 +78,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: 6
+  m_Text: 8
 --- !u!1 &1405239475337161008
 GameObject:
   m_ObjectHideFlags: 0
@@ -356,7 +356,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: 1
+  m_Text: 2
 --- !u!1 &1405239475693799234
 GameObject:
   m_ObjectHideFlags: 0
@@ -435,7 +435,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: 3
+  m_Text: 5
 --- !u!1 &1405239475972698573
 GameObject:
   m_ObjectHideFlags: 0
@@ -451,7 +451,7 @@ GameObject:
   - component: {fileID: 1405239475972698575}
   - component: {fileID: 1405239475972698568}
   m_Layer: 5
-  m_Name: Card_11
+  m_Name: Card_22
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -604,13 +604,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cardType: 1
   objectThreat: {fileID: 1405239476882065892}
-  draw: 2
-  danger: 010000000300000006000000
+  draw: 3
+  danger: 020000000500000008000000
   objectBattle: {fileID: 1405239476122728954}
   buttonEffect: {fileID: 2485832171758023390}
   buttonRemove: {fileID: 2770021041153023952}
   buttonPick: {fileID: 1405239475628248872}
-  battle: 1
+  battle: 2
   remove: 1
   effType: 4
 --- !u!1 &1405239476122728954
@@ -852,7 +852,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\uC12C\uC744 \uD0D0\uD5D8"
+  m_Text: "\uD3ED\uD48D\uC6B0"
 --- !u!1 &1405239476430798259
 GameObject:
   m_ObjectHideFlags: 0
@@ -1010,7 +1010,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: 1
+  m_Text: 2
 --- !u!1 &1405239476882065892
 GameObject:
   m_ObjectHideFlags: 0
@@ -1169,7 +1169,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: 2
+  m_Text: 3
 --- !u!1 &2485832171758023390
 GameObject:
   m_ObjectHideFlags: 0

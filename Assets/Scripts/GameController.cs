@@ -41,6 +41,9 @@ public class GameController : MonoBehaviour
         {
             card.GetComponent<CardScript>().ChangeThreatMode();
         }
+
+        ShuffleList(battleDeckList);
+        ShuffleList(threatDeckList);
     }
 
     // 카드 리스트를 인자로 받아 셔플
