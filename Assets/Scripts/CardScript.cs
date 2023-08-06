@@ -9,23 +9,39 @@ public enum CardType
     THREAT,
 }
 
+public enum EffectType
+{
+    NORMAL,
+    LIFE,
+    DRAW,
+    DESTROY,
+    DOUBLE,
+    COPY,
+    STEP,
+    SORT,
+    EXCHANGE,
+    BELOW,
+    MAX,
+    STOP
+}
+
 public class CardScript : MonoBehaviour
 {
     public CardType cardType;
-    public int serialNumber;
 
     [Header("THREAT")]
     public GameObject objectThreat;
     public int draw;
-    public List<int> level = new List<int>() { 0, 0, 0 };
+    public List<int> danger = new List<int>() { 0, 0, 0 };
 
     [Header("BATTLE")]
     public GameObject objectBattle;
-    public Button buttonEffect;
-    public Button buttonRemove;
-    public Button buttonPick;
-    public int remove;
+    public GameObject buttonEffect;
+    public GameObject buttonRemove;
+    public GameObject buttonPick;
     public int battle;
+    public int remove;
+    public EffectType effType;
 
     private Animator ani;
     private RectTransform rt;
@@ -47,12 +63,6 @@ public class CardScript : MonoBehaviour
             objectBattle.SetActive(isClicked);
             objectThreat.SetActive(!isClicked);
         }
-        else
-        {
-            buttonEffect.gameObject.SetActive(isClicked);
-            buttonRemove.gameObject.SetActive(isClicked);
-            buttonPick.gameObject.SetActive(isClicked);
-        }
     }
 
     // Event Trigger를 통해 Drag할 때 실행
@@ -62,7 +72,7 @@ public class CardScript : MonoBehaviour
         {
             Vector3 pos = Input.mousePosition;
 
-            if (pos.x < 120 || pos.x > 904 || pos.y < 70 || pos.y > 550)
+            if (pos.x < 400 || pos.x > 900 || pos.y < 70 || pos.y > 510)
                 return;
 
             rt.anchoredPosition = pos;
@@ -88,6 +98,15 @@ public class CardScript : MonoBehaviour
             objectThreat.SetActive(false);
             objectBattle.SetActive(true);
             isClicked = false;
+        }
+    }
+
+    public void RemoveThis()
+    {
+        if (cardType == CardType.BATTLE)
+        {
+            GameController.I.life -= remove;
+            GameController.I.RemoveBattleCard(gameObject.transform.GetSiblingIndex());
         }
     }
 }

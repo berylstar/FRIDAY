@@ -20,6 +20,7 @@ public class UIController : MonoBehaviour
     public Text textNowBattle;
     public GameObject buttonResolve;
     public GameObject buttonGiveup;
+    public GameObject buttonNextThreat;
 
     [Header("Source")]
     public Sprite[] spriteLevel;
