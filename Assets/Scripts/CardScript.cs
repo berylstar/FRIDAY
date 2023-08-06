@@ -63,6 +63,11 @@ public class CardScript : MonoBehaviour
             objectBattle.SetActive(isClicked);
             objectThreat.SetActive(!isClicked);
         }
+        else
+        {
+            buttonEffect.SetActive(isClicked);
+            buttonPick.SetActive(isClicked);
+        }
     }
 
     // Event Trigger를 통해 Drag할 때 실행
