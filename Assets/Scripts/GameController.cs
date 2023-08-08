@@ -17,6 +17,8 @@ public class GameController : MonoBehaviour
     public int nowDraw;
     public int nowDanger;
     public int nowBattle;
+    public int pickedBattle = -1;
+    public int removeCount;
 
     [Header("CARD")]
     public List<GameObject> battleDeckList = new List<GameObject>();
@@ -29,6 +31,7 @@ public class GameController : MonoBehaviour
     public List<GameObject> threatPassedList = new List<GameObject>();
 
     public List<GameObject> oldList = new List<GameObject>();
+    public List<GameObject> TooOldList = new List<GameObject>();
 
     private void Awake()
     {
@@ -44,6 +47,14 @@ public class GameController : MonoBehaviour
 
         ShuffleList(battleDeckList);
         ShuffleList(threatDeckList);
+        ShuffleList(oldList);
+        ShuffleList(TooOldList);
+    }
+
+    private void Update()
+    {
+        UIController.I.buttonResolve.GetComponent<Button>().interactable = (nowBattle >= nowDanger) && (battleFieldList.Count > 0);
+        UIController.I.textRemoveCount.text = "REMOVE COUNT\n: " + removeCount;
     }
 
     // 카드 리스트를 인자로 받아 셔플
@@ -188,8 +199,6 @@ public class GameController : MonoBehaviour
 
             nowBattle += battleDeckList[0].GetComponent<CardScript>().battle;
 
-            UIController.I.buttonResolve.GetComponent<Button>().interactable = (nowBattle >= nowDanger);
-
             DrawCard(CardType.BATTLE, new Vector2(500, 500));
         }
         else
@@ -218,7 +227,15 @@ public class GameController : MonoBehaviour
             return;
 
         if (nowDanger > nowBattle)
-            life -= (nowDanger - nowBattle);
+        {
+            removeCount = (nowDanger - nowBattle);
+            life -= removeCount;
+        }
+        else
+        {
+            removeCount = 0;
+        }
+            
 
         foreach (Transform child in battleField.transform)
         {
@@ -227,6 +244,7 @@ public class GameController : MonoBehaviour
 
         UIController.I.buttonDrawBattle.interactable = false;
         UIController.I.buttonResolve.SetActive(false);
+        UIController.I.textRemoveCount.gameObject.SetActive(true);
         UIController.I.buttonNextThreat.SetActive(true);
     }
 
@@ -273,6 +291,105 @@ public class GameController : MonoBehaviour
         UIController.I.textNowBattle.gameObject.SetActive(false);
         UIController.I.buttonResolve.SetActive(false);
         UIController.I.buttonGiveup.SetActive(false);
+        UIController.I.textRemoveCount.gameObject.SetActive(false);
         UIController.I.buttonNextThreat.SetActive(false);
+    }
+
+    public bool BattleCardEffect(EffectType effType, int effector)
+    {
+        if (effType == EffectType.LIFEPlusOne)
+        {
+            life += 1;
+        }
+        else if (effType == EffectType.LIFEMinusOne)
+        {
+            life -= 1;
+        }
+        else if (effType == EffectType.LIFEMinusTwo)
+        {
+            life -= 2;
+        }
+        else if (effType == EffectType.DRAWOne)
+        {
+            nowDraw += 1;
+        }
+        else if (effType == EffectType.DRAWTwo)
+        {
+            nowDraw += 2;
+        }
+        else if (effType == EffectType.DESTROY)
+        {
+            if (pickedBattle < 0)
+                return false;
+
+            RemoveBattleCard(pickedBattle);
+
+            pickedBattle = -1;
+        }
+        else if (effType == EffectType.DOUBLE)
+        {
+            if (pickedBattle < 0)
+                return false;
+
+            nowBattle += battleFieldList[pickedBattle].GetComponent<CardScript>().battle;
+        }
+        else if (effType == EffectType.COPY)
+        {
+            if (pickedBattle < 0)
+                return false;
+
+            battleField.transform.GetChild(effector).GetComponent<CardScript>().effType = battleFieldList[pickedBattle].GetComponent<CardScript>().effType;
+            return false;
+        }
+        else if (effType == EffectType.STEP)
+        {
+            nowDanger = nowThreat.danger[level - 1];
+        }
+        else if (effType == EffectType.SORT)
+        {
+
+        }
+        else if (effType == EffectType.EXCHANGEOne)
+        {
+            if (pickedBattle < 0)
+                return false;
+
+            EffectExchange();
+        }
+        else if (effType == EffectType.EXCHANGETwo)
+        {
+            if (pickedBattle < 0)
+                return false;
+
+            EffectExchange();
+            battleField.transform.GetChild(effector).GetComponent<CardScript>().effType = EffectType.EXCHANGEOne;
+            return false;
+        }
+        else if (effType == EffectType.BELOW)
+        {
+            battleDeckList.Add(battleFieldList[pickedBattle]);
+            battleFieldList.RemoveAt(pickedBattle);
+            Destroy(battleField.transform.GetChild(pickedBattle).gameObject);
+        }
+        else if (effType == EffectType.MAX)
+        {
+
+        }
+        else if (effType == EffectType.STOP)
+        {
+            nowDraw = 0;
+        }
+
+        return true;
+    }
+
+    public void EffectExchange()
+    {
+        battlePassedList.Add(battleFieldList[pickedBattle]);
+        battleFieldList.RemoveAt(pickedBattle);
+        Destroy(battleField.transform.GetChild(pickedBattle).gameObject);
+
+        nowDraw += 1;
+        pickedBattle = -1;
     }
 }

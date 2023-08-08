@@ -49,12 +49,15 @@ public class CardScript : MonoBehaviour
 
     private Animator ani;
     private RectTransform rt;
+
     private bool isClicked = false;
 
     private void Start()
     {
         ani = GetComponent<Animator>();
         rt = GetComponent<RectTransform>();
+
+        buttonEffect.GetComponent<Button>().interactable = (effType != EffectType.NORMAL);
     }
 
     public void ClickCard()
@@ -110,12 +113,28 @@ public class CardScript : MonoBehaviour
         }
     }
 
+    // ButtonRemove
     public void RemoveThis()
     {
         if (cardType == CardType.BATTLE)
         {
-            GameController.I.life -= remove;
+            if (GameController.I.removeCount < remove)
+                return;
+
+            GameController.I.removeCount -= remove;
             GameController.I.RemoveBattleCard(gameObject.transform.GetSiblingIndex());
         }
+    }
+
+    // ButtonEffect
+    public void Effect()
+    {
+        buttonEffect.GetComponent<Button>().interactable = GameController.I.BattleCardEffect(effType, gameObject.transform.GetSiblingIndex());
+    }
+
+    // ButtonPick
+    public void Pick()
+    {
+        GameController.I.pickedBattle = gameObject.transform.GetSiblingIndex();
     }
 }
