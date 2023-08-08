@@ -49,7 +49,9 @@ public class CardScript : MonoBehaviour
 
     private Animator ani;
     private RectTransform rt;
+
     private bool isClicked = false;
+    private bool isEffected = false;
 
     private void Start()
     {
@@ -110,6 +112,7 @@ public class CardScript : MonoBehaviour
         }
     }
 
+    // ButtonRemove
     public void RemoveThis()
     {
         if (cardType == CardType.BATTLE)
@@ -117,5 +120,101 @@ public class CardScript : MonoBehaviour
             GameController.I.life -= remove;
             GameController.I.RemoveBattleCard(gameObject.transform.GetSiblingIndex());
         }
+    }
+
+    // ButtonEffect
+    public void Effect()
+    {
+        if (isEffected)
+            return;
+
+        if (effType == EffectType.LIFEPlusOne)
+        {
+            GameController.I.life += 1;
+        }
+        else if (effType == EffectType.LIFEMinusOne)
+        {
+            GameController.I.life -= 1;
+        }
+        else if (effType == EffectType.LIFEMinusTwo)
+        {
+            GameController.I.life -= 2;
+        }
+        else if (effType == EffectType.DRAWOne)
+        {
+            GameController.I.nowDraw += 1;
+        }
+        else if (effType == EffectType.DRAWTwo)
+        {
+            GameController.I.nowDraw += 2;
+        }
+        else if (effType == EffectType.DESTROY)
+        {
+            if (GameController.I.pickedThreat == null)
+                return;
+
+            GameController.I.EffectDestroy();
+        }
+        else if (effType == EffectType.DOUBLE)
+        {
+            if (GameController.I.pickedThreat == null)
+                return;
+
+            GameController.I.nowBattle += GameController.I.pickedThreat.GetComponent<CardScript>().battle;
+        }
+        else if (effType == EffectType.COPY)
+        {
+            if (GameController.I.pickedThreat == null)
+                return;
+
+            effType = GameController.I.pickedThreat.GetComponent<CardScript>().effType;
+            return;
+        }
+        else if (effType == EffectType.STEP)
+        {
+
+        }
+        else if (effType == EffectType.SORT)
+        {
+
+        }
+        else if (effType == EffectType.EXCHANGEOne)
+        {
+            if (GameController.I.pickedThreat == null)
+                return;
+
+            GameController.I.EffectExchange();
+        }
+        else if (effType == EffectType.EXCHANGETwo)
+        {
+            if (GameController.I.pickedThreat == null)
+                return;
+
+            GameController.I.EffectExchange();
+            effType = EffectType.EXCHANGEOne;
+            return;
+        }
+        else if (effType == EffectType.BELOW)
+        {
+
+        }
+        else if (effType == EffectType.MAX)
+        {
+
+        }
+        else if (effType == EffectType.STOP)
+        {
+
+        }
+        else
+            return;
+
+        isEffected = true;
+    }
+
+    // ButtonPick
+    public void Pick()
+    {
+        GameController.I.pickedThreat = this.gameObject;
     }
 }

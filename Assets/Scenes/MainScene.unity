@@ -392,7 +392,19 @@ MonoBehaviour:
   - {fileID: 1405239475972698573, guid: 901616ebdcc5f694dbfe6c4d1c82ff8d, type: 3}
   threatFieldList: []
   threatPassedList: []
-  oldList: []
+  oldList:
+  - {fileID: 1405239475972698573, guid: 042468ecef324e64f83202ade95fecbb, type: 3}
+  - {fileID: 1405239475972698573, guid: 91d6522c8f71bb041807511fd3a73b3c, type: 3}
+  - {fileID: 1405239475972698573, guid: 91d6522c8f71bb041807511fd3a73b3c, type: 3}
+  - {fileID: 1405239475972698573, guid: 37b7dcc57ffd34447a731f4272a987f8, type: 3}
+  - {fileID: 1405239475972698573, guid: 2f2d0be498323664e94b7169e370aadd, type: 3}
+  - {fileID: 1405239475972698573, guid: 2f2d0be498323664e94b7169e370aadd, type: 3}
+  - {fileID: 1405239475972698573, guid: 405535bba66286a4a9a79ad1bd776397, type: 3}
+  - {fileID: 1405239475972698573, guid: 054b83d2527eafa498cc1b6353e866da, type: 3}
+  TooOldList:
+  - {fileID: 1405239475972698573, guid: e09f66bff08002f42959808cd610472f, type: 3}
+  - {fileID: 1405239475972698573, guid: 83ade22a51f2f394da39880b4dc11478, type: 3}
+  - {fileID: 1405239475972698573, guid: 741a0a293f1ef264abb3b967cb75be3c, type: 3}
 --- !u!1 &179751575
 GameObject:
   m_ObjectHideFlags: 0

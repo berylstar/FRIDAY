@@ -17,6 +17,7 @@ public class GameController : MonoBehaviour
     public int nowDraw;
     public int nowDanger;
     public int nowBattle;
+    [HideInInspector] public GameObject pickedThreat = null;
 
     [Header("CARD")]
     public List<GameObject> battleDeckList = new List<GameObject>();
@@ -29,6 +30,7 @@ public class GameController : MonoBehaviour
     public List<GameObject> threatPassedList = new List<GameObject>();
 
     public List<GameObject> oldList = new List<GameObject>();
+    public List<GameObject> TooOldList = new List<GameObject>();
 
     private void Awake()
     {
@@ -274,5 +276,25 @@ public class GameController : MonoBehaviour
         UIController.I.buttonResolve.SetActive(false);
         UIController.I.buttonGiveup.SetActive(false);
         UIController.I.buttonNextThreat.SetActive(false);
+    }
+
+    public void EffectDestroy()
+    {
+        int idx = battleFieldList.IndexOf(pickedThreat);
+
+        battleRemovedList.Add(battleFieldList[idx]);
+        battleFieldList.RemoveAt(idx);
+        Destroy(battleField.transform.GetChild(idx));
+    }
+
+    public void EffectExchange()
+    {
+        int idx = battleFieldList.IndexOf(pickedThreat);
+
+        battlePassedList.Add(battleFieldList[idx]);
+        battleFieldList.RemoveAt(idx);
+        Destroy(battleField.transform.GetChild(idx));
+
+        nowDraw += 1;
     }
 }
