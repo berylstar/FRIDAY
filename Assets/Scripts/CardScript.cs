@@ -12,14 +12,18 @@ public enum CardType
 public enum EffectType
 {
     NORMAL,
-    LIFE,
-    DRAW,
+    LIFEPlusOne,
+    LIFEMinusOne,
+    LIFEMinusTwo,
+    DRAWOne,
+    DRAWTwo,
     DESTROY,
     DOUBLE,
     COPY,
     STEP,
     SORT,
-    EXCHANGE,
+    EXCHANGEOne,
+    EXCHANGETwo,
     BELOW,
     MAX,
     STOP

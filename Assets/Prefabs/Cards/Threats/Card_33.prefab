@@ -612,7 +612,7 @@ MonoBehaviour:
   buttonPick: {fileID: 1405239475628248872}
   battle: 3
   remove: 1
-  effType: 7
+  effType: 10
 --- !u!1 &1405239476122728954
 GameObject:
   m_ObjectHideFlags: 0
@@ -773,7 +773,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: SORT x3
+  m_Text: SORT 3
 --- !u!1 &1405239476401246965
 GameObject:
   m_ObjectHideFlags: 0

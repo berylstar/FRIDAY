@@ -612,7 +612,7 @@ MonoBehaviour:
   buttonPick: {fileID: 1405239475628248872}
   battle: 0
   remove: 1
-  effType: 3
+  effType: 6
 --- !u!1 &1405239476122728954
 GameObject:
   m_ObjectHideFlags: 0
