@@ -51,6 +51,7 @@ public class CardScript : MonoBehaviour
     private RectTransform rt;
 
     private bool isClicked = false;
+    public bool isPicked = false;
 
     private void Start()
     {
@@ -118,7 +119,10 @@ public class CardScript : MonoBehaviour
     {
         if (cardType == CardType.BATTLE)
         {
-            GameController.I.life -= remove;
+            if (GameController.I.removeCount < remove)
+                return;
+
+            GameController.I.removeCount -= remove;
             GameController.I.RemoveBattleCard(gameObject.transform.GetSiblingIndex());
         }
     }
@@ -148,29 +152,29 @@ public class CardScript : MonoBehaviour
         }
         else if (effType == EffectType.DESTROY)
         {
-            if (GameController.I.pickedThreat == null)
+            if (GameController.I.pickedBattle == null)
                 return;
 
             GameController.I.EffectDestroy();
         }
         else if (effType == EffectType.DOUBLE)
         {
-            if (GameController.I.pickedThreat == null)
+            if (GameController.I.pickedBattle == null)
                 return;
 
-            GameController.I.nowBattle += GameController.I.pickedThreat.GetComponent<CardScript>().battle;
+            GameController.I.nowBattle += GameController.I.pickedBattle.GetComponent<CardScript>().battle;
         }
         else if (effType == EffectType.COPY)
         {
-            if (GameController.I.pickedThreat == null)
+            if (GameController.I.pickedBattle == null)
                 return;
 
-            effType = GameController.I.pickedThreat.GetComponent<CardScript>().effType;
+            effType = GameController.I.pickedBattle.GetComponent<CardScript>().effType;
             return;
         }
         else if (effType == EffectType.STEP)
         {
-
+            GameController.I.nowDanger = GameController.I.nowThreat.danger[GameController.I.level-1];
         }
         else if (effType == EffectType.SORT)
         {
@@ -178,14 +182,14 @@ public class CardScript : MonoBehaviour
         }
         else if (effType == EffectType.EXCHANGEOne)
         {
-            if (GameController.I.pickedThreat == null)
+            if (GameController.I.pickedBattle == null)
                 return;
 
             GameController.I.EffectExchange();
         }
         else if (effType == EffectType.EXCHANGETwo)
         {
-            if (GameController.I.pickedThreat == null)
+            if (GameController.I.pickedBattle == null)
                 return;
 
             GameController.I.EffectExchange();
@@ -213,9 +217,9 @@ public class CardScript : MonoBehaviour
     // ButtonPick
     public void Pick()
     {
-        GameController.I.pickedThreat = this.gameObject;
+        GameController.I.pickedBattle = this.gameObject;
 
-        int idx = GameObject.Find("CanvasField/BattleField").transform.Find(this.gameObject.name).GetSiblingIndex();
-        print(idx);
+        GameController.I.ResetPickedBattle();
+        isPicked = true;
     }
 }

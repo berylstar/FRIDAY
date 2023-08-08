@@ -625,6 +625,7 @@ MonoBehaviour:
   battle: 0
   remove: 1
   effType: 6
+  isPicked: 0
 --- !u!1 &1405239476122728954
 GameObject:
   m_ObjectHideFlags: 0

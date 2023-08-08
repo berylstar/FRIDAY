@@ -17,7 +17,8 @@ public class GameController : MonoBehaviour
     public int nowDraw;
     public int nowDanger;
     public int nowBattle;
-    public GameObject pickedThreat = null;
+    public GameObject pickedBattle = null;
+    public int removeCount;
 
     [Header("CARD")]
     public List<GameObject> battleDeckList = new List<GameObject>();
@@ -48,6 +49,12 @@ public class GameController : MonoBehaviour
         ShuffleList(threatDeckList);
         ShuffleList(oldList);
         ShuffleList(TooOldList);
+    }
+
+    private void Update()
+    {
+        UIController.I.buttonResolve.GetComponent<Button>().interactable = (nowBattle >= nowDanger) && (battleFieldList.Count > 0);
+        UIController.I.textRemoveCount.text = "REMOVE COUNT\n: " + removeCount;
     }
 
     // 카드 리스트를 인자로 받아 셔플
@@ -192,8 +199,6 @@ public class GameController : MonoBehaviour
 
             nowBattle += battleDeckList[0].GetComponent<CardScript>().battle;
 
-            UIController.I.buttonResolve.GetComponent<Button>().interactable = (nowBattle >= nowDanger);
-
             DrawCard(CardType.BATTLE, new Vector2(500, 500));
         }
         else
@@ -222,7 +227,15 @@ public class GameController : MonoBehaviour
             return;
 
         if (nowDanger > nowBattle)
-            life -= (nowDanger - nowBattle);
+        {
+            removeCount = (nowDanger - nowBattle);
+            life -= removeCount;
+        }
+        else
+        {
+            removeCount = 0;
+        }
+            
 
         foreach (Transform child in battleField.transform)
         {
@@ -231,6 +244,7 @@ public class GameController : MonoBehaviour
 
         UIController.I.buttonDrawBattle.interactable = false;
         UIController.I.buttonResolve.SetActive(false);
+        UIController.I.textRemoveCount.gameObject.SetActive(true);
         UIController.I.buttonNextThreat.SetActive(true);
     }
 
@@ -277,26 +291,49 @@ public class GameController : MonoBehaviour
         UIController.I.textNowBattle.gameObject.SetActive(false);
         UIController.I.buttonResolve.SetActive(false);
         UIController.I.buttonGiveup.SetActive(false);
+        UIController.I.textRemoveCount.gameObject.SetActive(false);
         UIController.I.buttonNextThreat.SetActive(false);
     }
 
     public void EffectDestroy()
     {
-        int idx = battleField.transform.Find(pickedThreat.name).GetSiblingIndex();
+        //int idx = battleField.transform.Find(pickedBattle.name).GetSiblingIndex();
+        int idx = FindPickedBattle();
 
         battleRemovedList.Add(battleFieldList[idx]);
         battleFieldList.RemoveAt(idx);
         Destroy(battleField.transform.GetChild(idx).gameObject);
+
+        pickedBattle = null;
     }
 
     public void EffectExchange()
     {
-        int idx = battleField.transform.Find(pickedThreat.name).GetSiblingIndex();
+        int idx = battleField.transform.Find(pickedBattle.name).GetSiblingIndex();
 
         battlePassedList.Add(battleFieldList[idx]);
         battleFieldList.RemoveAt(idx);
         Destroy(battleField.transform.GetChild(idx).gameObject);
 
         nowDraw += 1;
+    }
+
+    public int FindPickedBattle()
+    {
+        for (int i = 0; i < battleField.transform.childCount; i++)
+        {
+            if (battleField.transform.GetChild(i).GetComponent<CardScript>().isPicked)
+                return i;
+        }
+
+        return 0;
+    }
+
+    public void ResetPickedBattle()
+    {
+        foreach (Transform card in battleField.transform)
+        {
+            card.GetComponent<CardScript>().isPicked = false;
+        }
     }
 }
