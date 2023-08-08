@@ -277,7 +277,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1405239475628248875}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1405239475972698568}
+        m_TargetAssemblyTypeName: CardScript, Assembly-CSharp
+        m_MethodName: Pick
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &1405239475691932596
 GameObject:
   m_ObjectHideFlags: 0
@@ -610,8 +622,9 @@ MonoBehaviour:
   buttonEffect: {fileID: 2485832171758023390}
   buttonRemove: {fileID: 2770021041153023952}
   buttonPick: {fileID: 1405239475628248872}
-  remove: 1
   battle: 1
+  remove: 1
+  effType: 0
 --- !u!1 &1405239476122728954
 GameObject:
   m_ObjectHideFlags: 0

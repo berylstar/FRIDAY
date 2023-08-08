@@ -330,13 +330,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   level: 0
-  life: 20
+  life: 200
   battleField: {fileID: 2059110027}
   threatField: {fileID: 615370006}
   nowThreat: {fileID: 0}
   nowDraw: 0
   nowDanger: 0
   nowBattle: 0
+  pickedThreat: {fileID: 0}
   battleDeckList:
   - {fileID: 1405239475972698573, guid: 8bbf10a0117980c4da216acbe842d13d, type: 3}
   - {fileID: 1405239475972698573, guid: 8bbf10a0117980c4da216acbe842d13d, type: 3}

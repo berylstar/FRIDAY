@@ -51,12 +51,13 @@ public class CardScript : MonoBehaviour
     private RectTransform rt;
 
     private bool isClicked = false;
-    private bool isEffected = false;
 
     private void Start()
     {
         ani = GetComponent<Animator>();
         rt = GetComponent<RectTransform>();
+
+        buttonEffect.GetComponent<Button>().interactable = (effType != EffectType.NORMAL);
     }
 
     public void ClickCard()
@@ -125,9 +126,6 @@ public class CardScript : MonoBehaviour
     // ButtonEffect
     public void Effect()
     {
-        if (isEffected)
-            return;
-
         if (effType == EffectType.LIFEPlusOne)
         {
             GameController.I.life += 1;
@@ -209,12 +207,15 @@ public class CardScript : MonoBehaviour
         else
             return;
 
-        isEffected = true;
+        buttonEffect.GetComponent<Button>().interactable = false;
     }
 
     // ButtonPick
     public void Pick()
     {
         GameController.I.pickedThreat = this.gameObject;
+
+        int idx = GameObject.Find("CanvasField/BattleField").transform.Find(this.gameObject.name).GetSiblingIndex();
+        print(idx);
     }
 }

@@ -17,7 +17,7 @@ public class GameController : MonoBehaviour
     public int nowDraw;
     public int nowDanger;
     public int nowBattle;
-    [HideInInspector] public GameObject pickedThreat = null;
+    public GameObject pickedThreat = null;
 
     [Header("CARD")]
     public List<GameObject> battleDeckList = new List<GameObject>();
@@ -46,6 +46,8 @@ public class GameController : MonoBehaviour
 
         ShuffleList(battleDeckList);
         ShuffleList(threatDeckList);
+        ShuffleList(oldList);
+        ShuffleList(TooOldList);
     }
 
     // 카드 리스트를 인자로 받아 셔플
@@ -280,20 +282,20 @@ public class GameController : MonoBehaviour
 
     public void EffectDestroy()
     {
-        int idx = battleFieldList.IndexOf(pickedThreat);
+        int idx = battleField.transform.Find(pickedThreat.name).GetSiblingIndex();
 
         battleRemovedList.Add(battleFieldList[idx]);
         battleFieldList.RemoveAt(idx);
-        Destroy(battleField.transform.GetChild(idx));
+        Destroy(battleField.transform.GetChild(idx).gameObject);
     }
 
     public void EffectExchange()
     {
-        int idx = battleFieldList.IndexOf(pickedThreat);
+        int idx = battleField.transform.Find(pickedThreat.name).GetSiblingIndex();
 
         battlePassedList.Add(battleFieldList[idx]);
         battleFieldList.RemoveAt(idx);
-        Destroy(battleField.transform.GetChild(idx));
+        Destroy(battleField.transform.GetChild(idx).gameObject);
 
         nowDraw += 1;
     }
