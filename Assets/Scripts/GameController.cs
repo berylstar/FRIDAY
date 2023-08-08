@@ -17,7 +17,7 @@ public class GameController : MonoBehaviour
     public int nowDraw;
     public int nowDanger;
     public int nowBattle;
-    public GameObject pickedBattle = null;
+    public int pickedBattle = -1;
     public int removeCount;
 
     [Header("CARD")]
@@ -295,45 +295,101 @@ public class GameController : MonoBehaviour
         UIController.I.buttonNextThreat.SetActive(false);
     }
 
-    public void EffectDestroy()
+    public bool BattleCardEffect(EffectType effType, int effector)
     {
-        //int idx = battleField.transform.Find(pickedBattle.name).GetSiblingIndex();
-        int idx = FindPickedBattle();
+        if (effType == EffectType.LIFEPlusOne)
+        {
+            life += 1;
+        }
+        else if (effType == EffectType.LIFEMinusOne)
+        {
+            life -= 1;
+        }
+        else if (effType == EffectType.LIFEMinusTwo)
+        {
+            life -= 2;
+        }
+        else if (effType == EffectType.DRAWOne)
+        {
+            nowDraw += 1;
+        }
+        else if (effType == EffectType.DRAWTwo)
+        {
+            nowDraw += 2;
+        }
+        else if (effType == EffectType.DESTROY)
+        {
+            if (pickedBattle < 0)
+                return false;
 
-        battleRemovedList.Add(battleFieldList[idx]);
-        battleFieldList.RemoveAt(idx);
-        Destroy(battleField.transform.GetChild(idx).gameObject);
+            RemoveBattleCard(pickedBattle);
 
-        pickedBattle = null;
+            pickedBattle = -1;
+        }
+        else if (effType == EffectType.DOUBLE)
+        {
+            if (pickedBattle < 0)
+                return false;
+
+            nowBattle += battleFieldList[pickedBattle].GetComponent<CardScript>().battle;
+        }
+        else if (effType == EffectType.COPY)
+        {
+            if (pickedBattle < 0)
+                return false;
+
+            battleField.transform.GetChild(effector).GetComponent<CardScript>().effType = battleFieldList[pickedBattle].GetComponent<CardScript>().effType;
+            return false;
+        }
+        else if (effType == EffectType.STEP)
+        {
+            nowDanger = nowThreat.danger[level - 1];
+        }
+        else if (effType == EffectType.SORT)
+        {
+
+        }
+        else if (effType == EffectType.EXCHANGEOne)
+        {
+            if (pickedBattle < 0)
+                return false;
+
+            EffectExchange();
+        }
+        else if (effType == EffectType.EXCHANGETwo)
+        {
+            if (pickedBattle < 0)
+                return false;
+
+            EffectExchange();
+            battleField.transform.GetChild(effector).GetComponent<CardScript>().effType = EffectType.EXCHANGEOne;
+            return false;
+        }
+        else if (effType == EffectType.BELOW)
+        {
+            battleDeckList.Add(battleFieldList[pickedBattle]);
+            battleFieldList.RemoveAt(pickedBattle);
+            Destroy(battleField.transform.GetChild(pickedBattle).gameObject);
+        }
+        else if (effType == EffectType.MAX)
+        {
+
+        }
+        else if (effType == EffectType.STOP)
+        {
+            nowDraw = 0;
+        }
+
+        return true;
     }
 
     public void EffectExchange()
     {
-        int idx = battleField.transform.Find(pickedBattle.name).GetSiblingIndex();
-
-        battlePassedList.Add(battleFieldList[idx]);
-        battleFieldList.RemoveAt(idx);
-        Destroy(battleField.transform.GetChild(idx).gameObject);
+        battlePassedList.Add(battleFieldList[pickedBattle]);
+        battleFieldList.RemoveAt(pickedBattle);
+        Destroy(battleField.transform.GetChild(pickedBattle).gameObject);
 
         nowDraw += 1;
-    }
-
-    public int FindPickedBattle()
-    {
-        for (int i = 0; i < battleField.transform.childCount; i++)
-        {
-            if (battleField.transform.GetChild(i).GetComponent<CardScript>().isPicked)
-                return i;
-        }
-
-        return 0;
-    }
-
-    public void ResetPickedBattle()
-    {
-        foreach (Transform card in battleField.transform)
-        {
-            card.GetComponent<CardScript>().isPicked = false;
-        }
+        pickedBattle = -1;
     }
 }

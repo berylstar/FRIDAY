@@ -51,7 +51,6 @@ public class CardScript : MonoBehaviour
     private RectTransform rt;
 
     private bool isClicked = false;
-    public bool isPicked = false;
 
     private void Start()
     {
@@ -130,96 +129,12 @@ public class CardScript : MonoBehaviour
     // ButtonEffect
     public void Effect()
     {
-        if (effType == EffectType.LIFEPlusOne)
-        {
-            GameController.I.life += 1;
-        }
-        else if (effType == EffectType.LIFEMinusOne)
-        {
-            GameController.I.life -= 1;
-        }
-        else if (effType == EffectType.LIFEMinusTwo)
-        {
-            GameController.I.life -= 2;
-        }
-        else if (effType == EffectType.DRAWOne)
-        {
-            GameController.I.nowDraw += 1;
-        }
-        else if (effType == EffectType.DRAWTwo)
-        {
-            GameController.I.nowDraw += 2;
-        }
-        else if (effType == EffectType.DESTROY)
-        {
-            if (GameController.I.pickedBattle == null)
-                return;
-
-            GameController.I.EffectDestroy();
-        }
-        else if (effType == EffectType.DOUBLE)
-        {
-            if (GameController.I.pickedBattle == null)
-                return;
-
-            GameController.I.nowBattle += GameController.I.pickedBattle.GetComponent<CardScript>().battle;
-        }
-        else if (effType == EffectType.COPY)
-        {
-            if (GameController.I.pickedBattle == null)
-                return;
-
-            effType = GameController.I.pickedBattle.GetComponent<CardScript>().effType;
-            return;
-        }
-        else if (effType == EffectType.STEP)
-        {
-            GameController.I.nowDanger = GameController.I.nowThreat.danger[GameController.I.level-1];
-        }
-        else if (effType == EffectType.SORT)
-        {
-
-        }
-        else if (effType == EffectType.EXCHANGEOne)
-        {
-            if (GameController.I.pickedBattle == null)
-                return;
-
-            GameController.I.EffectExchange();
-        }
-        else if (effType == EffectType.EXCHANGETwo)
-        {
-            if (GameController.I.pickedBattle == null)
-                return;
-
-            GameController.I.EffectExchange();
-            effType = EffectType.EXCHANGEOne;
-            return;
-        }
-        else if (effType == EffectType.BELOW)
-        {
-
-        }
-        else if (effType == EffectType.MAX)
-        {
-
-        }
-        else if (effType == EffectType.STOP)
-        {
-
-        }
-        else
-            return;
-
-        buttonEffect.GetComponent<Button>().interactable = false;
+        buttonEffect.GetComponent<Button>().interactable = GameController.I.BattleCardEffect(effType, gameObject.transform.GetSiblingIndex());
     }
 
     // ButtonPick
     public void Pick()
     {
-        GameController.I.pickedBattle = this.gameObject;
-
-        GameController.I.ResetPickedBattle();
-        isPicked = true;
+        GameController.I.pickedBattle = gameObject.transform.GetSiblingIndex();
     }
 }

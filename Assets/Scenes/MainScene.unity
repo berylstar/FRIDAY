@@ -155,7 +155,7 @@ RectTransform:
   m_Children:
   - {fileID: 1864279611}
   m_Father: {fileID: 1860102434}
-  m_RootOrder: 11
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -310,8 +310,8 @@ MonoBehaviour:
   buttonDrawBattle: {fileID: 734938472}
   textNowBattle: {fileID: 179751577}
   buttonResolve: {fileID: 2001127182}
-  textRemoveCount: {fileID: 2090886987}
   buttonGiveup: {fileID: 53615037}
+  textRemoveCount: {fileID: 2090886987}
   buttonNextThreat: {fileID: 1647498543}
   spriteLevel:
   - {fileID: 21300000, guid: 269504835cf3e6049bac3e44425ad59c, type: 3}
@@ -338,7 +338,8 @@ MonoBehaviour:
   nowDraw: 0
   nowDanger: 0
   nowBattle: 0
-  pickedBattle: {fileID: 0}
+  pickedBattle: -1
+  removeCount: 0
   battleDeckList:
   - {fileID: 1405239475972698573, guid: 8bbf10a0117980c4da216acbe842d13d, type: 3}
   - {fileID: 1405239475972698573, guid: 8bbf10a0117980c4da216acbe842d13d, type: 3}
@@ -2763,8 +2764,8 @@ RectTransform:
   - {fileID: 734938471}
   - {fileID: 179751576}
   - {fileID: 2001127183}
-  - {fileID: 2090886986}
   - {fileID: 53615038}
+  - {fileID: 2090886986}
   - {fileID: 1647498544}
   - {fileID: 1773506584}
   m_Father: {fileID: 0}
@@ -3243,11 +3244,11 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1860102434}
-  m_RootOrder: 10
+  m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 150.00002, y: 249.99998}
+  m_AnchoredPosition: {x: 150.00003, y: 249.99998}
   m_SizeDelta: {x: 300, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2090886987
