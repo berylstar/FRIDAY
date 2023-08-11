@@ -13,6 +13,7 @@ public enum EffectType
 {
     NORMAL,
     LIFEPlusOne,
+    LIFEPlusTwo,
     LIFEMinusOne,
     LIFEMinusTwo,
     DRAWOne,

@@ -303,10 +303,10 @@ MonoBehaviour:
   imgLevel: {fileID: 1937597802}
   textLife: {fileID: 1179122602}
   panelPirtate: {fileID: 1773506583}
-  textBattleDeck: {fileID: 1158794663}
+  textBattleDeckCounter: {fileID: 0}
   buttonDrawBattle: {fileID: 734938472}
   textNowBattlePoint: {fileID: 179751577}
-  textThreatDeck: {fileID: 2123562137}
+  textThreatDeckCounter: {fileID: 0}
   buttonDrawThreat: {fileID: 352276159}
   buttonPickup: {fileID: 1294807336}
   buttonPickdown: {fileID: 944227363}
@@ -341,76 +341,17 @@ MonoBehaviour:
   nowBattle: 0
   removeCount: 0
   idxPickedBattle: -1
-  battleDeck: 18
-  battleDeckList:
-  - {fileID: 1405239475972698573, guid: 8bbf10a0117980c4da216acbe842d13d, type: 3}
-  - {fileID: 1405239475972698573, guid: 8bbf10a0117980c4da216acbe842d13d, type: 3}
-  - {fileID: 1405239475972698573, guid: 8bbf10a0117980c4da216acbe842d13d, type: 3}
-  - {fileID: 1405239475972698573, guid: 8bbf10a0117980c4da216acbe842d13d, type: 3}
-  - {fileID: 1405239475972698573, guid: 8bbf10a0117980c4da216acbe842d13d, type: 3}
-  - {fileID: 1405239475972698573, guid: ef2636c012696494daa527f1570ddf19, type: 3}
-  - {fileID: 1405239475972698573, guid: ef2636c012696494daa527f1570ddf19, type: 3}
-  - {fileID: 1405239475972698573, guid: ef2636c012696494daa527f1570ddf19, type: 3}
-  - {fileID: 1405239475972698573, guid: ef2636c012696494daa527f1570ddf19, type: 3}
-  - {fileID: 1405239475972698573, guid: ef2636c012696494daa527f1570ddf19, type: 3}
-  - {fileID: 1405239475972698573, guid: ef2636c012696494daa527f1570ddf19, type: 3}
-  - {fileID: 1405239475972698573, guid: ef2636c012696494daa527f1570ddf19, type: 3}
-  - {fileID: 1405239475972698573, guid: ef2636c012696494daa527f1570ddf19, type: 3}
-  - {fileID: 1405239475972698573, guid: 1fdf9a3df972c964e9ce301a4cc5c987, type: 3}
-  - {fileID: 1405239475972698573, guid: 1fdf9a3df972c964e9ce301a4cc5c987, type: 3}
-  - {fileID: 1405239475972698573, guid: 1fdf9a3df972c964e9ce301a4cc5c987, type: 3}
-  - {fileID: 1405239475972698573, guid: 5b4768f5aa6f7c14980fd20868aaaa98, type: 3}
-  - {fileID: 1405239475972698573, guid: 6dfda886aa2def441be483da7000beb1, type: 3}
+  battleDeckCounter: 18
+  battleDeckList: []
   battleFieldList: []
   battlePassedList: []
   battleRemovedList: []
-  threatDeck: 30
-  threatDeckList:
-  - {fileID: 1405239475972698573, guid: 4bd9f7696e8ddf741965741680743ea5, type: 3}
-  - {fileID: 1405239475972698573, guid: d92923bec5c7dfc4f86df3d041d22f12, type: 3}
-  - {fileID: 1405239475972698573, guid: cde7ad107c8c7734facc1a30161a5351, type: 3}
-  - {fileID: 1405239475972698573, guid: cde7ad107c8c7734facc1a30161a5351, type: 3}
-  - {fileID: 1405239475972698573, guid: 51bce64af44bdea448f3748bbca4b76f, type: 3}
-  - {fileID: 1405239475972698573, guid: 160d99f975ace3144a5545500780c382, type: 3}
-  - {fileID: 1405239475972698573, guid: 160d99f975ace3144a5545500780c382, type: 3}
-  - {fileID: 1405239475972698573, guid: ca63f28000d82be409677b24692db1b7, type: 3}
-  - {fileID: 1405239475972698573, guid: a2874390bdc5de94a8709a7319fc50a3, type: 3}
-  - {fileID: 1405239475972698573, guid: a2874390bdc5de94a8709a7319fc50a3, type: 3}
-  - {fileID: 1405239475972698573, guid: b60065d70f89a8144882cdeca77f17e1, type: 3}
-  - {fileID: 1405239475972698573, guid: 4a689636fa23ba6418d8db9f2e0ff9a8, type: 3}
-  - {fileID: 1405239475972698573, guid: 4a689636fa23ba6418d8db9f2e0ff9a8, type: 3}
-  - {fileID: 1405239475972698573, guid: e1c07525d99957a4bb9dc4960c4f80c7, type: 3}
-  - {fileID: 1405239475972698573, guid: 72aecc5ce7981204eadc3708e5fc3466, type: 3}
-  - {fileID: 1405239475972698573, guid: 72aecc5ce7981204eadc3708e5fc3466, type: 3}
-  - {fileID: 1405239475972698573, guid: 9a915076b0893394984c32fcfcc6597c, type: 3}
-  - {fileID: 1405239475972698573, guid: 3db16918bbac21345a1a900453a9b9e0, type: 3}
-  - {fileID: 1405239475972698573, guid: 637b8b576984e874eab45493efef5c04, type: 3}
-  - {fileID: 1405239475972698573, guid: 946bf8c9ab1a5894fad130256e41c57e, type: 3}
-  - {fileID: 1405239475972698573, guid: 6db6ca576c9d4df45bbbc4b1aab56a60, type: 3}
-  - {fileID: 1405239475972698573, guid: 588395bc0fdc82f458fac585c74cbab9, type: 3}
-  - {fileID: 1405239475972698573, guid: ca410dbc1547ba74bb0eda4fe6ea186f, type: 3}
-  - {fileID: 1405239475972698573, guid: 88cc49ead934b584a8a1a6cb258a36f5, type: 3}
-  - {fileID: 1405239475972698573, guid: b489b7c30da005d4cbe2a866b61a553a, type: 3}
-  - {fileID: 1405239475972698573, guid: 34133040d5a99ad478fd231eab8d2508, type: 3}
-  - {fileID: 1405239475972698573, guid: 4752ac98370dab4468e7564790918e33, type: 3}
-  - {fileID: 1405239475972698573, guid: b2731efc03df44f41973d021937de161, type: 3}
-  - {fileID: 1405239475972698573, guid: 901616ebdcc5f694dbfe6c4d1c82ff8d, type: 3}
-  - {fileID: 1405239475972698573, guid: 901616ebdcc5f694dbfe6c4d1c82ff8d, type: 3}
+  threatDeckCounter: 30
+  threatDeckList: []
   threatFieldList: []
   threatPassedList: []
-  oldList:
-  - {fileID: 1405239475972698573, guid: 042468ecef324e64f83202ade95fecbb, type: 3}
-  - {fileID: 1405239475972698573, guid: 91d6522c8f71bb041807511fd3a73b3c, type: 3}
-  - {fileID: 1405239475972698573, guid: 91d6522c8f71bb041807511fd3a73b3c, type: 3}
-  - {fileID: 1405239475972698573, guid: 37b7dcc57ffd34447a731f4272a987f8, type: 3}
-  - {fileID: 1405239475972698573, guid: 2f2d0be498323664e94b7169e370aadd, type: 3}
-  - {fileID: 1405239475972698573, guid: 2f2d0be498323664e94b7169e370aadd, type: 3}
-  - {fileID: 1405239475972698573, guid: 405535bba66286a4a9a79ad1bd776397, type: 3}
-  - {fileID: 1405239475972698573, guid: 054b83d2527eafa498cc1b6353e866da, type: 3}
-  TooOldList:
-  - {fileID: 1405239475972698573, guid: e09f66bff08002f42959808cd610472f, type: 3}
-  - {fileID: 1405239475972698573, guid: 83ade22a51f2f394da39880b4dc11478, type: 3}
-  - {fileID: 1405239475972698573, guid: 741a0a293f1ef264abb3b967cb75be3c, type: 3}
+  oldList: []
+  TooOldList: []
 --- !u!1 &179751575
 GameObject:
   m_ObjectHideFlags: 0

@@ -312,6 +312,10 @@ public class GameController : MonoBehaviour
     {
         if (effType == EffectType.LIFEPlusOne)
         {
+            life += 1;
+        }
+        else if (effType == EffectType.LIFEPlusTwo)
+        {
             life += 2;
         }
         else if (effType == EffectType.LIFEMinusOne)
