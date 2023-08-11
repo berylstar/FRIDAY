@@ -33,6 +33,11 @@ public class GameController : MonoBehaviour
     public List<GameObject> oldList = new List<GameObject>();
     public List<GameObject> TooOldList = new List<GameObject>();
 
+    private readonly Vector2 _stThreatPos = new Vector2(150, 450);
+    private readonly Vector2 _ndThreatPos = new Vector2(150, 150);
+    private readonly Vector2 _pickedThreatPos = new Vector2(150, 400);
+    private readonly Vector2 _battleCardPos = new Vector2(500, 500);
+
     private void Awake()
     {
         I = this;
@@ -53,6 +58,8 @@ public class GameController : MonoBehaviour
 
     private void Update()
     {
+        UIController.I.buttonDrawBattle.GetComponent<Image>().color = (nowDraw > 0) ? new Color32(255, 255, 255, 255) : new Color32(200, 100, 100, 255);
+
         UIController.I.buttonResolve.GetComponent<Button>().interactable = (nowBattle >= nowDanger) && (battleFieldList.Count > 0);
         UIController.I.textRemoveCount.text = "REMOVE COUNT\n: " + removeCount;
     }
@@ -130,7 +137,7 @@ public class GameController : MonoBehaviour
     {
         if (threatDeckList.Count > 0)
         {
-            DrawCard(CardType.THREAT, new Vector2(150, 450));
+            DrawCard(CardType.THREAT, _stThreatPos);
             UIController.I.buttonPickup.SetActive(true);
             UIController.I.buttonPickdown.SetActive(true);
 
@@ -149,7 +156,7 @@ public class GameController : MonoBehaviour
 
         if (threatDeckList.Count > 0)
         {
-            DrawCard(CardType.THREAT, new Vector2(150, 150));
+            DrawCard(CardType.THREAT, _ndThreatPos);
         }
     }
 
@@ -170,7 +177,7 @@ public class GameController : MonoBehaviour
             UIController.I.buttonResolve.SetActive(true);
             UIController.I.buttonGiveup.SetActive(true);
 
-            threatField.transform.GetChild(i).GetComponent<RectTransform>().anchoredPosition = new Vector2(150, 400);
+            threatField.transform.GetChild(i).GetComponent<RectTransform>().anchoredPosition = _pickedThreatPos;
 
             if (threatFieldList.Count == 2)
             {
@@ -192,14 +199,14 @@ public class GameController : MonoBehaviour
     {
         if (battleDeckList.Count > 0)
         {
-            if (nowDraw <= 0)
+            if (nowDraw  < 1)
                 life -= 1;
             else
                 nowDraw -= 1;
 
             nowBattle += battleDeckList[0].GetComponent<CardScript>().battle;
 
-            DrawCard(CardType.BATTLE, new Vector2(500, 500));
+            DrawCard(CardType.BATTLE, _battleCardPos);
         }
         else
         {
@@ -303,11 +310,11 @@ public class GameController : MonoBehaviour
         }
         else if (effType == EffectType.LIFEMinusOne)
         {
-            life -= 1;
+            // CardScript.Start()
         }
         else if (effType == EffectType.LIFEMinusTwo)
         {
-            life -= 2;
+            // CardScript.Start()
         }
         else if (effType == EffectType.DRAWOne)
         {
@@ -377,7 +384,7 @@ public class GameController : MonoBehaviour
         }
         else if (effType == EffectType.STOP)
         {
-            nowDraw = 0;
+            // CardScript.Start()
         }
 
         return true;

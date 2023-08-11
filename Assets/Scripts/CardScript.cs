@@ -58,6 +58,19 @@ public class CardScript : MonoBehaviour
         rt = GetComponent<RectTransform>();
 
         buttonEffect.GetComponent<Button>().interactable = (effType != EffectType.NORMAL);
+
+        if (effType == EffectType.STOP)
+        {
+            GameController.I.nowDraw = 0;
+        }
+        else if (effType == EffectType.LIFEMinusOne)
+        {
+            GameController.I.life -= 1;
+        }
+        else if (effType == EffectType.LIFEMinusTwo)
+        {
+            GameController.I.life -= 2;
+        }
     }
 
     public void ClickCard()
