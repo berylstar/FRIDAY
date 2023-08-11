@@ -303,10 +303,10 @@ MonoBehaviour:
   imgLevel: {fileID: 1937597802}
   textLife: {fileID: 1179122602}
   panelPirtate: {fileID: 1773506583}
-  textBattleDeckCounter: {fileID: 0}
+  textBattleDeckCounter: {fileID: 1158794663}
   buttonDrawBattle: {fileID: 734938472}
   textNowBattlePoint: {fileID: 179751577}
-  textThreatDeckCounter: {fileID: 0}
+  textThreatDeckCounter: {fileID: 2123562137}
   buttonDrawThreat: {fileID: 352276159}
   buttonPickup: {fileID: 1294807336}
   buttonPickdown: {fileID: 944227363}
