@@ -608,6 +608,7 @@ MonoBehaviour:
   danger: 000000000100000003000000
   objectBattle: {fileID: 1405239476122728954}
   buttonEffect: {fileID: 2485832171758023390}
+  textEffect: {fileID: 0}
   buttonRemove: {fileID: 2770021041153023952}
   buttonPick: {fileID: 1405239475628248872}
   battle: 0

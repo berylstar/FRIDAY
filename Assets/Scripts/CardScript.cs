@@ -41,6 +41,7 @@ public class CardScript : MonoBehaviour
     [Header("BATTLE")]
     public GameObject objectBattle;
     public GameObject buttonEffect;
+    public Text textEffect;
     public GameObject buttonRemove;
     public GameObject buttonPick;
     public int battle;
@@ -97,7 +98,7 @@ public class CardScript : MonoBehaviour
         {
             Vector3 pos = Input.mousePosition;
 
-            if (pos.x < 400 || pos.x > 900 || pos.y < 70 || pos.y > 510)
+            if (pos.x < 400 || pos.x > 900 || pos.y < 70 || pos.y > 460)
                 return;
 
             rt.anchoredPosition = pos;
@@ -142,12 +143,17 @@ public class CardScript : MonoBehaviour
     // ButtonEffect
     public void Effect()
     {
-        buttonEffect.GetComponent<Button>().interactable = GameController.I.BattleCardEffect(effType, gameObject.transform.GetSiblingIndex());
+        if (GameController.I.BattleCardEffect(effType, gameObject.transform.GetSiblingIndex()))
+        {
+            // 효과 발동
+            buttonEffect.GetComponent<Button>().interactable = false;
+            textEffect.color = Color.gray;
+        }
     }
 
     // ButtonPick
     public void Pick()
     {
-        GameController.I.pickedBattle = gameObject.transform.GetSiblingIndex();
+        GameController.I.idxPickedBattle = gameObject.transform.GetSiblingIndex();
     }
 }
