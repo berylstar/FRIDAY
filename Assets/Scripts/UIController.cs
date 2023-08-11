@@ -10,14 +10,18 @@ public class UIController : MonoBehaviour
     [Header("UI")]
     public Image imgLevel;
     public Text textLife;
-    public Text textDeck;
+    
     public GameObject panelPirtate;
     private bool activePirate = false;
+
+    public Text textBattleDeckCounter;
+    public Button buttonDrawBattle;
+    public Text textNowBattlePoint;
+
+    public Text textThreatDeckCounter;
     public Button buttonDrawThreat;
     public GameObject buttonPickup;
     public GameObject buttonPickdown;
-    public Button buttonDrawBattle;
-    public Text textNowBattle;
     public GameObject buttonResolve;
     public GameObject buttonGiveup;
     public Text textRemoveCount;
@@ -35,8 +39,9 @@ public class UIController : MonoBehaviour
     {
         imgLevel.sprite = spriteLevel[GameController.I.level];
         textLife.text = "x" + GameController.I.life;
-        textDeck.text = "x" + GameController.I.battleDeckList.Count;
-        textNowBattle.text = GameController.I.nowBattle + "p";
+        textBattleDeckCounter.text = GameController.I.battleDeckList.Count + "/" + GameController.I.battleDeckCounter;
+        textThreatDeckCounter.text = GameController.I.threatDeckList.Count + "/" + GameController.I.threatDeckCounter;
+        textNowBattlePoint.text = GameController.I.nowBattle + "p";
     }
 
     public void ButtonPirate()
