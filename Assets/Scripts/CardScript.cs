@@ -14,8 +14,6 @@ public enum EffectType
     NORMAL,
     LIFEPlusOne,
     LIFEPlusTwo,
-    LIFEMinusOne,
-    LIFEMinusTwo,
     DRAWOne,
     DRAWTwo,
     DESTROY,
@@ -26,7 +24,10 @@ public enum EffectType
     EXCHANGEOne,
     EXCHANGETwo,
     BELOW,
-    MAX,
+
+    LIFEMinusOne,
+    LIFEMinusTwo,
+    HIGHZero,
     STOP
 }
 
@@ -41,8 +42,9 @@ public class CardScript : MonoBehaviour
 
     [Header("BATTLE")]
     public GameObject objectBattle;
-    public GameObject buttonEffect;
     public Text textEffect;
+    public Text textBattlePoint;
+    public GameObject buttonEffect;    
     public GameObject buttonRemove;
     public GameObject buttonPick;
     public int battle;
@@ -61,18 +63,18 @@ public class CardScript : MonoBehaviour
 
         buttonEffect.GetComponent<Button>().interactable = (effType != EffectType.NORMAL);
 
-        if (effType == EffectType.STOP)
-        {
-            GameController.I.nowDraw = 0;
-        }
-        else if (effType == EffectType.LIFEMinusOne)
-        {
-            GameController.I.life -= 1;
-        }
-        else if (effType == EffectType.LIFEMinusTwo)
-        {
-            GameController.I.life -= 2;
-        }
+        if      (effType == EffectType.LIFEMinusOne)    { GameController.I.isMinusOne = true; }
+        else if (effType == EffectType.LIFEMinusTwo)    { GameController.I.isMinusTwo = true; }
+        else if (effType == EffectType.HIGHZero)        { GameController.I.isHighZero = true; }
+        else if (effType == EffectType.STOP)            { GameController.I.isStop = true; }
+    }
+
+    private void OnDestroy()
+    {
+        if      (effType == EffectType.LIFEMinusOne)    { GameController.I.isMinusOne = false; }
+        else if (effType == EffectType.LIFEMinusTwo)    { GameController.I.isMinusTwo = false; }
+        else if (effType == EffectType.HIGHZero)        { GameController.I.isHighZero = false; }
+        else if (effType == EffectType.STOP)            { GameController.I.isStop = false; }
     }
 
     public void ClickCard()
@@ -156,5 +158,10 @@ public class CardScript : MonoBehaviour
     public void Pick()
     {
         GameController.I.idxPickedBattle = gameObject.transform.GetSiblingIndex();
+    }
+
+    public void ApplyBattleText()
+    {
+        textBattlePoint.text = battle.ToString();
     }
 }

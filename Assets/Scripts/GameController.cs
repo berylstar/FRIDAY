@@ -32,13 +32,18 @@ public class GameController : MonoBehaviour
     public List<GameObject> threatFieldList = new List<GameObject>();
     public List<GameObject> threatPassedList = new List<GameObject>();
 
+    public List<GameObject> agingList = new List<GameObject>();
     public List<GameObject> oldList = new List<GameObject>();
-    public List<GameObject> TooOldList = new List<GameObject>();
 
     private readonly Vector2 _stThreatPos = new Vector2(150, 400);
     private readonly Vector2 _ndThreatPos = new Vector2(150, 100);
     private readonly Vector2 _pickedThreatPos = new Vector2(150, 350);
     private readonly Vector2 _battleCardPos = new Vector2(500, 450);
+
+    public bool isMinusOne = false;
+    public bool isMinusTwo = false;
+    public bool isHighZero = false;
+    public bool isStop = false;
 
     private void Awake()
     {
@@ -54,8 +59,8 @@ public class GameController : MonoBehaviour
 
         ShuffleList(battleDeckList);
         ShuffleList(threatDeckList);
+        ShuffleList(agingList);
         ShuffleList(oldList);
-        ShuffleList(TooOldList);
     }
 
     private void Update()
@@ -201,19 +206,52 @@ public class GameController : MonoBehaviour
     {
         if (battleDeckList.Count > 0)
         {
-            if (nowDraw  < 1)
+            if (nowDraw < 1 || isStop)
                 life -= 1;
 
             nowDraw -= 1;
-
-            nowBattle += battleDeckList[0].GetComponent<CardScript>().battle;
 
             DrawCard(CardType.BATTLE, _battleCardPos);
         }
         else
         {
-            // 노화 카드 추가
+            AddAging();
             ResetDeck(CardType.BATTLE);
+        }
+
+        nowBattle = CalculateBattle();
+    }
+
+    private int CalculateBattle()
+    {
+        int sumBattle = 0;
+        int maxx = -6;
+
+        foreach (Transform child in battleField.transform)
+        {
+            int i = child.GetComponent<CardScript>().battle;
+            sumBattle += i;
+
+            if (maxx < i) { maxx = i; }
+        }
+
+        if (isHighZero)
+            sumBattle -= maxx;
+
+        return sumBattle;
+    }
+
+    private void AddAging()
+    {
+        if (agingList.Count > 0)
+        {
+            battleDeckList.Add(agingList[0]);
+            agingList.RemoveAt(0);
+        }
+        else if (oldList.Count > 0)
+        {
+            battleDeckList.Add(oldList[0]);
+            oldList.RemoveAt(0);
         }
     }
 
@@ -269,6 +307,7 @@ public class GameController : MonoBehaviour
         battleDeckCounter -= 1;
     }
 
+    // 다음 위협을 위해 필드 초기화
     public void ReadyForNextThreat()
     {
         while (battleFieldList.Count > 0)                   // 배틀 카드 정리
@@ -281,7 +320,10 @@ public class GameController : MonoBehaviour
         {
             Destroy(child.gameObject);
         }
-        
+
+        if (isMinusOne) { life -= 1; }
+        if (isMinusTwo) { life -= 2; }
+
         //////////
 
         while (threatFieldList.Count > 0)                   // 위협 카드 정리
@@ -299,6 +341,12 @@ public class GameController : MonoBehaviour
         nowDraw = 0;
         nowDanger = 0;
         nowBattle = 0;
+
+        isMinusOne = false;
+        isMinusTwo = false;
+        isHighZero = false;
+        isStop = false;
+
         UIController.I.buttonDrawThreat.interactable = true;
         UIController.I.buttonDrawBattle.interactable = false;
         UIController.I.textNowBattlePoint.gameObject.SetActive(false);
@@ -318,14 +366,6 @@ public class GameController : MonoBehaviour
         {
             life += 2;
         }
-        else if (effType == EffectType.LIFEMinusOne)
-        {
-            // CardScript.Start()
-        }
-        else if (effType == EffectType.LIFEMinusTwo)
-        {
-            // CardScript.Start()
-        }
         else if (effType == EffectType.DRAWOne)
         {
             nowDraw += 1;
@@ -339,16 +379,15 @@ public class GameController : MonoBehaviour
             if (idxPickedBattle < 0)
                 return false;
 
-            RemoveBattleCard(idxPickedBattle);
-
-            idxPickedBattle = -1;
+            RemoveBattleCard(idxPickedBattle);            
         }
         else if (effType == EffectType.DOUBLE)
         {
             if (idxPickedBattle < 0)
                 return false;
 
-            nowBattle += battleFieldList[idxPickedBattle].GetComponent<CardScript>().battle;
+            battleField.transform.GetChild(idxEffector).GetComponent<CardScript>().battle *= 2;
+            battleField.transform.GetChild(idxEffector).GetComponent<CardScript>().ApplyBattleText();
         }
         else if (effType == EffectType.COPY)
         {
@@ -390,15 +429,9 @@ public class GameController : MonoBehaviour
             battleFieldList.RemoveAt(idxPickedBattle);
             Destroy(battleField.transform.GetChild(idxPickedBattle).gameObject);
         }
-        else if (effType == EffectType.MAX)
-        {
 
-        }
-        else if (effType == EffectType.STOP)
-        {
-            // CardScript.Start()
-        }
-
+        nowBattle = CalculateBattle();
+        idxPickedBattle = -1;
         return true;
     }
 
@@ -408,7 +441,6 @@ public class GameController : MonoBehaviour
         battleFieldList.RemoveAt(idxPickedBattle);
         Destroy(battleField.transform.GetChild(idxPickedBattle).gameObject);
 
-        nowDraw += 1;
-        idxPickedBattle = -1;
+        DrawBattleCard();
     }
 }
