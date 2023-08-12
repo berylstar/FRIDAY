@@ -342,16 +342,18 @@ MonoBehaviour:
   removeCount: 0
   idxPickedBattle: -1
   battleDeckCounter: 18
-  battleDeckList: []
+  battleDeckList:
+  - {fileID: 1405239475972698573, guid: 8bbf10a0117980c4da216acbe842d13d, type: 3}
   battleFieldList: []
   battlePassedList: []
   battleRemovedList: []
   threatDeckCounter: 30
-  threatDeckList: []
+  threatDeckList:
+  - {fileID: 1405239475972698573, guid: 4bd9f7696e8ddf741965741680743ea5, type: 3}
   threatFieldList: []
   threatPassedList: []
+  agingList: []
   oldList: []
-  TooOldList: []
 --- !u!1 &179751575
 GameObject:
   m_ObjectHideFlags: 0
