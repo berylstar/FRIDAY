@@ -44,9 +44,9 @@ public class CardScript : MonoBehaviour
     public GameObject objectBattle;
     public Text textEffect;
     public Text textBattlePoint;
-    public GameObject buttonEffect;    
-    public GameObject buttonRemove;
+    public GameObject buttonEffect;   
     public GameObject buttonPick;
+    public GameObject buttonRemove;
     public int battle;
     public int remove;
     public EffectType effType;
@@ -60,8 +60,6 @@ public class CardScript : MonoBehaviour
     {
         ani = GetComponent<Animator>();
         rt = GetComponent<RectTransform>();
-
-        buttonEffect.GetComponent<Button>().interactable = (effType != EffectType.NORMAL);
 
         if      (effType == EffectType.LIFEMinusOne)    { GameController.I.isMinusOne = true; }
         else if (effType == EffectType.LIFEMinusTwo)    { GameController.I.isMinusTwo = true; }
@@ -127,7 +125,16 @@ public class CardScript : MonoBehaviour
             objectThreat.SetActive(false);
             objectBattle.SetActive(true);
             isClicked = false;
+
+
+            buttonEffect.GetComponent<Button>().interactable = (effType != EffectType.NORMAL);
         }
+    }
+
+    // BattleDeckList 에서의 인덱스 반환 (BattleDeck에 생성된 인덱스와 같음)
+    public int ReturnIndex()
+    {
+        return gameObject.transform.GetSiblingIndex();
     }
 
     // ButtonRemove
@@ -139,14 +146,14 @@ public class CardScript : MonoBehaviour
                 return;
 
             GameController.I.removeCount -= remove;
-            GameController.I.RemoveBattleCard(gameObject.transform.GetSiblingIndex());
+            GameController.I.RemoveBattleCard(ReturnIndex());
         }
     }
 
     // ButtonEffect
     public void Effect()
     {
-        if (GameController.I.BattleCardEffect(effType, gameObject.transform.GetSiblingIndex()))
+        if (GameController.I.BattleCardEffect(effType, ReturnIndex()))
         {
             // 효과 발동
             buttonEffect.GetComponent<Button>().interactable = false;
@@ -157,7 +164,10 @@ public class CardScript : MonoBehaviour
     // ButtonPick
     public void Pick()
     {
-        GameController.I.idxPickedBattle = gameObject.transform.GetSiblingIndex();
+        if (GameController.I.canvasSort.activeInHierarchy)
+            return;
+
+        GameController.I.idxPickedBattle = ReturnIndex();
     }
 
     public void ApplyBattleText()

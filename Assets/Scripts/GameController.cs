@@ -21,13 +21,13 @@ public class GameController : MonoBehaviour
     [HideInInspector] public int idxPickedBattle = -1;
 
     [Header("CARD")]
-    public int battleDeckCounter = 18;
+    public int battleDeckCounter;
     public List<GameObject> battleDeckList = new List<GameObject>();
     public List<GameObject> battleFieldList = new List<GameObject>();
     public List<GameObject> battlePassedList = new List<GameObject>();
     public List<GameObject> battleRemovedList = new List<GameObject>();
 
-    public int threatDeckCounter = 30;
+    public int threatDeckCounter;
     public List<GameObject> threatDeckList = new List<GameObject>();
     public List<GameObject> threatFieldList = new List<GameObject>();
     public List<GameObject> threatPassedList = new List<GameObject>();
@@ -45,6 +45,13 @@ public class GameController : MonoBehaviour
     public bool isHighZero = false;
     public bool isStop = false;
 
+    [Header("For Effect Sort")]
+    public GameObject canvasSort;
+    public Transform transformForSort;
+    public GameObject[] buttonSorts;
+    private int indexSort = 0;
+    private List<GameObject> sortList = new List<GameObject>();
+
     private void Awake()
     {
         I = this;
@@ -61,11 +68,14 @@ public class GameController : MonoBehaviour
         ShuffleList(threatDeckList);
         ShuffleList(agingList);
         ShuffleList(oldList);
+
+        battleDeckCounter = battleDeckList.Count;
+        threatDeckCounter = threatDeckList.Count;
     }
 
     private void Update()
     {
-        UIController.I.buttonDrawBattle.GetComponent<Image>().color = (nowDraw > 0) ? new Color32(255, 255, 255, 255) : new Color32(200, 100, 100, 255);
+        UIController.I.buttonDrawBattle.GetComponent<Image>().color = (nowDraw < 1 || isStop) ? new Color32(200, 100, 100, 255) : new Color32(255, 255, 255, 255);
 
         UIController.I.buttonResolve.GetComponent<Button>().interactable = (nowBattle >= nowDanger) && (battleFieldList.Count > 0);
         UIController.I.textRemoveCount.text = "REMOVE COUNT\n: " + removeCount;
@@ -134,6 +144,15 @@ public class GameController : MonoBehaviour
         card.transform.SetParent(parent, false);
         card.GetComponent<RectTransform>().anchoredPosition = pos;
         card.transform.localScale = new Vector3(1, 1, 1);
+
+        if (type == CardType.THREAT)
+        {
+            card.GetComponent<CardScript>().ChangeThreatMode();
+        }
+        else
+        {
+            card.GetComponent<CardScript>().ChangeBattleMode();
+        }
 
         tolist.Add(decklist[0]);
         decklist.RemoveAt(0);
@@ -208,8 +227,8 @@ public class GameController : MonoBehaviour
         {
             if (nowDraw < 1 || isStop)
                 life -= 1;
-
-            nowDraw -= 1;
+            else
+                nowDraw -= 1;
 
             DrawCard(CardType.BATTLE, _battleCardPos);
         }
@@ -226,18 +245,20 @@ public class GameController : MonoBehaviour
     {
         int sumBattle = 0;
         int maxx = -6;
+        int val;
 
         foreach (Transform child in battleField.transform)
         {
-            int i = child.GetComponent<CardScript>().battle;
-            sumBattle += i;
+            val = child.GetComponent<CardScript>().battle;
+            sumBattle += val;
 
-            if (maxx < i) { maxx = i; }
+            if (maxx < val) { maxx = val; }
         }
 
         if (isHighZero)
             sumBattle -= maxx;
 
+        print("CALC");
         return sumBattle;
     }
 
@@ -261,7 +282,7 @@ public class GameController : MonoBehaviour
         if (nowThreat == null)
             return;
 
-        threatFieldList[0].GetComponent<CardScript>().ChangeBattleMode();
+        // threatFieldList[0].GetComponent<CardScript>().ChangeBattleMode();
         battlePassedList.Add(threatFieldList[0]);
         threatFieldList.Clear();
         threatDeckCounter -= 1;
@@ -285,7 +306,6 @@ public class GameController : MonoBehaviour
             removeCount = 0;
         }
             
-
         foreach (Transform child in battleField.transform)
         {
             child.GetComponent<CardScript>().buttonRemove.SetActive(true);
@@ -358,6 +378,9 @@ public class GameController : MonoBehaviour
 
     public bool BattleCardEffect(EffectType effType, int idxEffector)
     {
+        if (canvasSort.activeInHierarchy)
+            return false;
+
         if (effType == EffectType.LIFEPlusOne)
         {
             life += 1;
@@ -376,14 +399,14 @@ public class GameController : MonoBehaviour
         }
         else if (effType == EffectType.DESTROY)
         {
-            if (idxPickedBattle < 0)
+            if (idxPickedBattle < 0 || (idxEffector == idxPickedBattle))
                 return false;
 
             RemoveBattleCard(idxPickedBattle);            
         }
         else if (effType == EffectType.DOUBLE)
         {
-            if (idxPickedBattle < 0)
+            if (idxPickedBattle < 0 || (idxEffector == idxPickedBattle))
                 return false;
 
             battleField.transform.GetChild(idxEffector).GetComponent<CardScript>().battle *= 2;
@@ -391,7 +414,7 @@ public class GameController : MonoBehaviour
         }
         else if (effType == EffectType.COPY)
         {
-            if (idxPickedBattle < 0)
+            if (idxPickedBattle < 0 || (idxEffector == idxPickedBattle))
                 return false;
 
             battleField.transform.GetChild(idxEffector).GetComponent<CardScript>().effType = battleFieldList[idxPickedBattle].GetComponent<CardScript>().effType;
@@ -404,18 +427,21 @@ public class GameController : MonoBehaviour
         }
         else if (effType == EffectType.SORT)
         {
+            if (battleDeckList.Count < 2)
+                return false;
 
+            EffectSort();
         }
         else if (effType == EffectType.EXCHANGEOne)
         {
-            if (idxPickedBattle < 0)
+            if (idxPickedBattle < 0 || (idxEffector == idxPickedBattle))
                 return false;
 
             EffectExchange();
         }
         else if (effType == EffectType.EXCHANGETwo)
         {
-            if (idxPickedBattle < 0)
+            if (idxPickedBattle < 0 || (idxEffector == idxPickedBattle))
                 return false;
 
             EffectExchange();
@@ -425,6 +451,9 @@ public class GameController : MonoBehaviour
         }
         else if (effType == EffectType.BELOW)
         {
+            if (idxPickedBattle < 0 || (idxEffector == idxPickedBattle))
+                return false;
+
             battleDeckList.Add(battleFieldList[idxPickedBattle]);
             battleFieldList.RemoveAt(idxPickedBattle);
             Destroy(battleField.transform.GetChild(idxPickedBattle).gameObject);
@@ -435,12 +464,60 @@ public class GameController : MonoBehaviour
         return true;
     }
 
-    public void EffectExchange()
+    private void EffectExchange()
     {
         battlePassedList.Add(battleFieldList[idxPickedBattle]);
         battleFieldList.RemoveAt(idxPickedBattle);
         Destroy(battleField.transform.GetChild(idxPickedBattle).gameObject);
 
         DrawBattleCard();
+    }
+
+    public void EffectSort()
+    {
+        int lim = Mathf.Min(battleDeckList.Count, 3);
+
+        for (int i = 0; i < lim; i++)
+        {
+            GameObject card = Instantiate(battleDeckList[0]) as GameObject;
+            card.transform.SetParent(transformForSort, false);
+            card.GetComponent<RectTransform>().anchoredPosition = new Vector2 (-200 + 250 * i, 0);
+            card.transform.localScale = new Vector3(1, 1, 1);
+
+            sortList.Add(battleDeckList[0]);
+            battleDeckList.RemoveAt(0);
+
+            indexSort = i + 1;
+        }
+
+        canvasSort.SetActive(true);
+    }
+
+    public void ButtonForSort(int idx)
+    {
+        battleDeckList.Insert(0, sortList[idx]);
+        buttonSorts[idx].SetActive(false);
+        transformForSort.GetChild(idx).gameObject.SetActive(false);
+
+        if (indexSort == 1)
+        {
+            foreach (Transform child in transformForSort)
+            {
+                Destroy(child.gameObject);
+            }
+
+            indexSort = 0;
+
+            foreach (GameObject button in buttonSorts)
+            {
+                button.SetActive(true);
+            }
+
+            sortList.Clear();
+
+            canvasSort.SetActive(false);
+        }
+        
+        indexSort -= 1;
     }
 }
