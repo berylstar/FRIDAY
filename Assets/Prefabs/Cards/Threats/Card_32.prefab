@@ -78,7 +78,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: '-'
+  m_Text: 11
 --- !u!1 &1405239475628248872
 GameObject:
   m_ObjectHideFlags: 0
@@ -289,7 +289,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: -1
+  m_Text: 3
 --- !u!1 &1405239475693799234
 GameObject:
   m_ObjectHideFlags: 0
@@ -368,7 +368,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: '-'
+  m_Text: 7
 --- !u!1 &1405239475972698573
 GameObject:
   m_ObjectHideFlags: 0
@@ -384,7 +384,7 @@ GameObject:
   - component: {fileID: 1405239475972698575}
   - component: {fileID: 1405239475972698568}
   m_Layer: 5
-  m_Name: Card_Start01
+  m_Name: Card_32
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -535,19 +535,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2490b580308105947991f9db2d4d6904, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cardType: 0
+  cardType: 1
   objectThreat: {fileID: 1405239476882065892}
-  draw: 0
-  danger: 000000000000000000000000
+  draw: 4
+  danger: 04000000070000000b000000
   objectBattle: {fileID: 1405239476122728954}
   textEffect: {fileID: 1405239476280079113}
   textBattlePoint: {fileID: 1405239475691932598}
   buttonEffect: {fileID: 2485832171758023390}
   buttonPick: {fileID: 1405239475628248872}
   buttonRemove: {fileID: 2770021041153023952}
-  battle: -1
+  battle: 3
   remove: 1
-  effType: 0
+  effType: 3
 --- !u!1 &1405239476122728954
 GameObject:
   m_ObjectHideFlags: 0
@@ -565,7 +565,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1405239476122728955
 RectTransform:
   m_ObjectHideFlags: 0
@@ -707,7 +707,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: ...
+  m_Text: DRAW +1
 --- !u!1 &1405239476401246965
 GameObject:
   m_ObjectHideFlags: 0
@@ -786,7 +786,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: '-'
+  m_Text: "\uC57C\uC0DD \uC9D0\uC2B9"
 --- !u!1 &1405239476430798259
 GameObject:
   m_ObjectHideFlags: 0
@@ -865,7 +865,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\uC0B0\uB9CC\uD568"
+  m_Text: "\uACBD\uD5D8"
 --- !u!1 &1405239476816171946
 GameObject:
   m_ObjectHideFlags: 0
@@ -944,7 +944,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: '-'
+  m_Text: 4
 --- !u!1 &1405239476882065892
 GameObject:
   m_ObjectHideFlags: 0
@@ -962,7 +962,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1405239476882065893
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1103,7 +1103,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: '-'
+  m_Text: 4
 --- !u!1 &2485832171758023390
 GameObject:
   m_ObjectHideFlags: 0
@@ -1219,7 +1219,7 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 0
+  m_Interactable: 1
   m_TargetGraphic: {fileID: 6444441601916304025}
   m_OnClick:
     m_PersistentCalls:

@@ -289,7 +289,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: -1
+  m_Text: 0
 --- !u!1 &1405239475693799234
 GameObject:
   m_ObjectHideFlags: 0
@@ -384,7 +384,7 @@ GameObject:
   - component: {fileID: 1405239475972698575}
   - component: {fileID: 1405239475972698568}
   m_Layer: 5
-  m_Name: Card_Start01
+  m_Name: Card_Start02
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -545,7 +545,7 @@ MonoBehaviour:
   buttonEffect: {fileID: 2485832171758023390}
   buttonPick: {fileID: 1405239475628248872}
   buttonRemove: {fileID: 2770021041153023952}
-  battle: -1
+  battle: 0
   remove: 1
   effType: 0
 --- !u!1 &1405239476122728954
@@ -865,7 +865,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\uC0B0\uB9CC\uD568"
+  m_Text: "\uB098\uC57D\uD568"
 --- !u!1 &1405239476816171946
 GameObject:
   m_ObjectHideFlags: 0
