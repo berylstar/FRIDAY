@@ -376,14 +376,14 @@ public class GameController : MonoBehaviour
         }
         else if (effType == EffectType.DESTROY)
         {
-            if (idxPickedBattle < 0)
+            if (idxPickedBattle < 0 || (idxEffector == idxPickedBattle))
                 return false;
 
             RemoveBattleCard(idxPickedBattle);            
         }
         else if (effType == EffectType.DOUBLE)
         {
-            if (idxPickedBattle < 0)
+            if (idxPickedBattle < 0 || (idxEffector == idxPickedBattle))
                 return false;
 
             battleField.transform.GetChild(idxEffector).GetComponent<CardScript>().battle *= 2;
@@ -391,7 +391,7 @@ public class GameController : MonoBehaviour
         }
         else if (effType == EffectType.COPY)
         {
-            if (idxPickedBattle < 0)
+            if (idxPickedBattle < 0 || (idxEffector == idxPickedBattle))
                 return false;
 
             battleField.transform.GetChild(idxEffector).GetComponent<CardScript>().effType = battleFieldList[idxPickedBattle].GetComponent<CardScript>().effType;
@@ -408,14 +408,14 @@ public class GameController : MonoBehaviour
         }
         else if (effType == EffectType.EXCHANGEOne)
         {
-            if (idxPickedBattle < 0)
+            if (idxPickedBattle < 0 || (idxEffector == idxPickedBattle))
                 return false;
 
             EffectExchange();
         }
         else if (effType == EffectType.EXCHANGETwo)
         {
-            if (idxPickedBattle < 0)
+            if (idxPickedBattle < 0 || (idxEffector == idxPickedBattle))
                 return false;
 
             EffectExchange();
@@ -425,6 +425,9 @@ public class GameController : MonoBehaviour
         }
         else if (effType == EffectType.BELOW)
         {
+            if (idxPickedBattle < 0 || (idxEffector == idxPickedBattle))
+                return false;
+
             battleDeckList.Add(battleFieldList[idxPickedBattle]);
             battleFieldList.RemoveAt(idxPickedBattle);
             Destroy(battleField.transform.GetChild(idxPickedBattle).gameObject);
