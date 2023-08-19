@@ -48,5 +48,6 @@ public class UIController : MonoBehaviour
     {
         activePirate = !activePirate;
         panelPirtate.SetActive(activePirate);
+        SoundManager.I.PlayEffect("ButtonClick");
     }
 }

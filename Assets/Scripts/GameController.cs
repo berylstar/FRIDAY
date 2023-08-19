@@ -81,6 +81,16 @@ public class GameController : MonoBehaviour
         UIController.I.textRemoveCount.text = "REMOVE COUNT\n: " + removeCount;
     }
 
+    private void ChangeHP(int val)
+    {
+        if (val > 0)
+            SoundManager.I.PlayEffect("HPplus");
+        else
+            SoundManager.I.PlayEffect("HPminus");
+
+        life += val;
+    }
+
     // 카드 리스트를 인자로 받아 셔플
     private void ShuffleList(List<GameObject> list)
     {
@@ -120,6 +130,8 @@ public class GameController : MonoBehaviour
             battlePassedList.Clear();
             ShuffleList(battleDeckList);
         }
+
+        SoundManager.I.PlayEffect("DeckShuffle");
     }
 
     private void DrawCard(CardType type, Vector2 pos)
@@ -184,6 +196,8 @@ public class GameController : MonoBehaviour
         {
             DrawCard(CardType.THREAT, _ndThreatPos);
         }
+
+        SoundManager.I.PlayEffect("CardSet");
     }
 
     // 세트 된 2장의 위협카드 중 맞설 위협 선택
@@ -218,6 +232,8 @@ public class GameController : MonoBehaviour
             nowDraw = nowThreat.draw;
             nowDanger = nowThreat.danger[level];
         }
+
+        SoundManager.I.PlayEffect("CardPick");
     }
 
     // 위협에 맞서기 위해 배틀카드 뽑기
@@ -226,7 +242,7 @@ public class GameController : MonoBehaviour
         if (battleDeckList.Count > 0)
         {
             if (nowDraw < 1 || isStop)
-                life -= 1;
+                ChangeHP(-1);
             else
                 nowDraw -= 1;
 
@@ -239,6 +255,7 @@ public class GameController : MonoBehaviour
         }
 
         nowBattle = CalculateBattle();
+        SoundManager.I.PlayEffect("CardSet");
     }
 
     private int CalculateBattle()
@@ -258,7 +275,6 @@ public class GameController : MonoBehaviour
         if (isHighZero)
             sumBattle -= maxx;
 
-        print("CALC");
         return sumBattle;
     }
 
@@ -288,6 +304,8 @@ public class GameController : MonoBehaviour
         threatDeckCounter -= 1;
         battleDeckCounter += 1;
         ReadyForNextThreat();
+
+        SoundManager.I.PlayEffect("Resolve");
     }
 
     // 위협 포기
@@ -299,7 +317,7 @@ public class GameController : MonoBehaviour
         if (nowDanger > nowBattle)
         {
             removeCount = (nowDanger - nowBattle);
-            life -= removeCount;
+            ChangeHP(-removeCount);
         }
         else
         {
@@ -316,6 +334,8 @@ public class GameController : MonoBehaviour
         UIController.I.buttonGiveup.SetActive(false);
         UIController.I.textRemoveCount.gameObject.SetActive(true);
         UIController.I.buttonNextThreat.SetActive(true);
+
+        SoundManager.I.PlayEffect("Giveup");
     }
 
     // 위협 포기 후 배틀필드에서 카드 제거
@@ -325,6 +345,8 @@ public class GameController : MonoBehaviour
         battleFieldList.RemoveAt(idx);
         Destroy(battleField.transform.GetChild(idx).gameObject);
         battleDeckCounter -= 1;
+
+        SoundManager.I.PlayEffect("CardRemove");
     }
 
     // 다음 위협을 위해 필드 초기화
@@ -341,8 +363,8 @@ public class GameController : MonoBehaviour
             Destroy(child.gameObject);
         }
 
-        if (isMinusOne) { life -= 1; }
-        if (isMinusTwo) { life -= 2; }
+        if (isMinusOne) { ChangeHP(-1); }
+        if (isMinusTwo) { ChangeHP(-2); }
 
         //////////
 
@@ -374,6 +396,8 @@ public class GameController : MonoBehaviour
         UIController.I.buttonGiveup.SetActive(false);
         UIController.I.textRemoveCount.gameObject.SetActive(false);
         UIController.I.buttonNextThreat.SetActive(false);
+
+        SoundManager.I.PlayEffect("DeckShuffle");
     }
 
     public bool BattleCardEffect(EffectType effType, int idxEffector)
@@ -383,11 +407,11 @@ public class GameController : MonoBehaviour
 
         if (effType == EffectType.LIFEPlusOne)
         {
-            life += 1;
+            ChangeHP(1);
         }
         else if (effType == EffectType.LIFEPlusTwo)
         {
-            life += 2;
+            ChangeHP(2);
         }
         else if (effType == EffectType.DRAWOne)
         {
@@ -459,6 +483,7 @@ public class GameController : MonoBehaviour
             Destroy(battleField.transform.GetChild(idxPickedBattle).gameObject);
         }
 
+        SoundManager.I.PlayEffect("CardEffect");
         nowBattle = CalculateBattle();
         idxPickedBattle = -1;
         return true;

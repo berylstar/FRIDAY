@@ -90,6 +90,8 @@ public class CardScript : MonoBehaviour
             buttonEffect.SetActive(isClicked);
             buttonPick.SetActive(isClicked);
         }
+
+        SoundManager.I.PlayEffect("CardFlip");
     }
 
     // Event Trigger를 통해 Drag할 때 실행
@@ -148,6 +150,8 @@ public class CardScript : MonoBehaviour
             GameController.I.removeCount -= remove;
             GameController.I.RemoveBattleCard(ReturnIndex());
         }
+
+        SoundManager.I.PlayEffect("CardRemove");
     }
 
     // ButtonEffect
@@ -159,6 +163,8 @@ public class CardScript : MonoBehaviour
             buttonEffect.GetComponent<Button>().interactable = false;
             textEffect.color = Color.gray;
         }
+
+        SoundManager.I.PlayEffect("CardEffect");
     }
 
     // ButtonPick
@@ -168,6 +174,8 @@ public class CardScript : MonoBehaviour
             return;
 
         GameController.I.idxPickedBattle = ReturnIndex();
+
+        SoundManager.I.PlayEffect("CardPick");
     }
 
     public void ApplyBattleText()
